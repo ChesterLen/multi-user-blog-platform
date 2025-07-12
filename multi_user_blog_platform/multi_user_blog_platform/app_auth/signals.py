@@ -6,5 +6,7 @@ from multi_user_blog_platform.app_auth import models
 UserModel = get_user_model()
 
 @receiver(post_save, sender=UserModel)
-def create_user_profile(sender, instance, created, kwargs):
-    ...
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        models.Profile.objects.create(user=instance)
+        instance.profile.save()
