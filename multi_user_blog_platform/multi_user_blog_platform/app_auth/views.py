@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from multi_user_blog_platform.app_auth import forms, tasks, tokens
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.auth import views as auth_views, get_user_model
+from django.contrib.auth import views as auth_views, get_user_model, logout
 from django.shortcuts import redirect
 from django.conf import settings
 
@@ -44,3 +44,9 @@ def activate_account(request, uidb64, token):
 
 class LoginView(auth_views.LoginView):
     template_name = 'user/login.html'
+
+
+class LogoutView(views.View):
+    def get(self, request):
+        logout(request)
+        return redirect('registration')

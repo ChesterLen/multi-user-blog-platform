@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'multi_user_blog_platform.app_auth',
+    'multi_user_blog_platform.web',
 ]
 
 MIDDLEWARE = [
