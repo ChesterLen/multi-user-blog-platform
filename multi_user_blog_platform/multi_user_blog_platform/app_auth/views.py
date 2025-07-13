@@ -1,6 +1,13 @@
 from django.views import generic as views
 from django.urls import reverse_lazy
-from multi_user_blog_platform.app_auth import forms, tasks
+from multi_user_blog_platform.app_auth import forms, tasks, tokens
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth import views as auth_views, get_user_model
+from django.shortcuts import redirect
+
+
+UserModel = get_user_model()
 
 
 class UserRegistrationView(views.CreateView):
@@ -9,5 +16,30 @@ class UserRegistrationView(views.CreateView):
     success_url = reverse_lazy('registration')
 
     def form_valid(self, form):
-        tasks.return_result.delay()
-        return super().form_valid(form)
+        user = form.save()
+        user_email = user.email
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = tokens.account_activate_password_reset_token_generator.make_token(user=user)
+
+        tasks.send_confirmation_email.delay(uid=uid, token=token, user_email=user_email)
+
+        return user
+    
+
+def activate_account(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(force_str(uidb64))
+        user = UserModel.objects.get(pk=uid)
+    except (ValueError, TypeError, OverflowError, UserModel.DoesNotExist):
+        user = None
+
+    if user is not None and tokens.account_activate_password_reset_token_generator.check_token(user=user, token=token):
+        user.is_active = True
+        user.save()
+        return redirect('login')
+    else:
+        return redirect('registration')
+    
+
+class LoginView(auth_views.LoginView):
+    template_name = 'user/login.html'
