@@ -5,6 +5,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import views as auth_views, get_user_model
 from django.shortcuts import redirect
+from django.conf import settings
 
 
 UserModel = get_user_model()
@@ -17,13 +18,13 @@ class UserRegistrationView(views.CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        user_email = user.email
+        user_email = form.cleaned_data['email']
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = tokens.account_activate_password_reset_token_generator.make_token(user=user)
 
-        tasks.send_confirmation_email.delay(uid=uid, token=token, user_email=user_email)
+        tasks.send_confirmation_email.delay(uid=uid, token=token, site_url=settings.SITE_URL, user_email=user_email)
 
-        return user
+        return super().form_valid(form)
     
 
 def activate_account(request, uidb64, token):

@@ -4,16 +4,15 @@ from google.oauth2.credentials import Credentials
 from email.message import EmailMessage
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from django.conf import settings
 from django.urls import reverse_lazy
 
 
 @shared_task
-def send_confirmation_email(uid, token, user_email, from_email='svetoslavbaykov55@gmail.com'):
+def send_confirmation_email(uid, token, user_email, site_url, from_email='svetoslavbaykov55@gmail.com'):
     try:
         creds = Credentials.from_authorized_user_file(filename='token.json')
 
-        activation_link = f'{settings.SITE_URL}{reverse_lazy('activate_account', kwargs={'uidb64': uid, 'token': token})}'
+        activation_link = f'{site_url}{reverse_lazy('activate_account', kwargs={'uidb64': uid, 'token': token})}'
 
         subject = 'Activate account'
 
@@ -30,7 +29,7 @@ def send_confirmation_email(uid, token, user_email, from_email='svetoslavbaykov5
 
         service = build(serviceName='gmail', version='v1', credentials=creds)
 
-        send_message = service.users().messages().send(userId='me', body=create_message)
+        send_message = service.users().messages().send(userId='me', body=create_message).execute()
     
     except HttpError as e:
         print(f'An errpr occured: {e}')
