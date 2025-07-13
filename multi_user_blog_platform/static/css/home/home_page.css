@@ -36,8 +36,24 @@
     color: #F68537;
     text-align: center;
     gap: 3em;
+    margin: 1em 0;
 }
 
 .hero h2 {
     margin-bottom: 0.5em;
+}
+
+.featured-pets {
+    display: flex;
+    gap: 0.5em;
+}
+
+.trnding-posts {
+    display: flex;
+    gap: 0.5em;
+}
+
+footer {
+    color: #fff;
+    background-color: #f7630c;
 }
