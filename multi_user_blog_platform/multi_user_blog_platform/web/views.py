@@ -23,7 +23,7 @@ class DogCatView(views.View):
 
         first_key = next(iter(request.GET), None)
 
-        if first_key in pet_kind_dict and pet:
+        if first_key and first_key in pet_kind_dict and pet:
             pet.specie = pet_kind_dict[first_key]
             pet.save()
             return redirect('profile_update', pk=pet.pk)

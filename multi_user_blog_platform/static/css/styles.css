@@ -4,3 +4,5 @@
 @import 'forms.css';
 @import 'home/home_page.css';
 @import 'user/login.css';
+@import 'user/profile_details.css';
+@import 'pet/dog_or_cat.css';

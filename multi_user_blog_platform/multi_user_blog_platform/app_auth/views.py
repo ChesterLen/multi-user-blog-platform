@@ -64,3 +64,11 @@ class ProfileUpdateView(views.UpdateView):
 
     def get_success_url(self):
         return reverse('profile_details', args=[self.object.pk])
+    
+    def form_valid(self, form):
+        product = form.save()
+        images = self.request.FILES.getlist('images')
+
+        for image in images:
+            models.PetImage.objects.create(pet=product, image=image)
+        return super().form_valid(form)

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="profile-details">
-        <img src="" alt="profile image">
+        <img src="{{ object.petimage_set.first.image.url }}" alt="profile image">
         <div class="details">
             {% if object.name %}
                 <h1>{{ object.name }}</h1>
@@ -13,7 +13,8 @@
             <p>{{ object.description }}</p>
 
             <p>I am {{ object.age }} years old.</p>
+
+            <a href="{% url 'dog_or_cat' %}">Edit</a>
         </div>
-         <a href="{% url 'dog_or_cat' %}">Edit</a>
     </div>
 {% endblock %}
