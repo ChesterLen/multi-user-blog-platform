@@ -1,0 +1,43 @@
+.form {
+    background-color: #D6D85D;
+    padding: 3em;
+    border-radius: 5px;
+    width: 350px;
+}
+
+.form h3 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.form form label {
+    margin-bottom: 0.2em;
+}
+
+.form form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.form form div input {
+    border: none;
+    border-radius: 3px;
+}
+
+.form p {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.form p a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.form form button {
+    display: block;
+    margin: 0 auto;
+}

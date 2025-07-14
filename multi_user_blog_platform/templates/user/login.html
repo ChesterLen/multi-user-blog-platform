@@ -1,5 +1,13 @@
-<form action="{% url 'login' %}" method="post">
-    {{ form }}
-    {% csrf_token %}
-    <button>Login</button>
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="form">
+        <h3>Login</h3>
+        <form action="{% url 'login' %}" method="post">
+            {{ form }}
+            {% csrf_token %}
+            <button>Login</button>
+        </form>
+        <p>You don't have an account? Register <a href="{% url 'registration' %}">here</a></p>
+    </div>
+{% endblock %}
