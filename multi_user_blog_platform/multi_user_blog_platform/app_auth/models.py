@@ -44,8 +44,10 @@ class AppUser(auth_models.PermissionsMixin, auth_models.AbstractBaseUser):
     USERNAME_FIELD = 'email'
 
 
-class Profile(models.Model):
-    first_name = models.CharField(max_length=300, null=True, blank=True)
-    last_name = models.CharField(max_length=300, null=True, blank=True)
+class Pet(models.Model):
+    name = models.CharField(max_length=300, null=False, blank=False)
+    description = models.TextField(max_length=500, default='Hello there', null=True, blank=True)
+    age = models.IntegerField(default=0, null=False, blank=False)
+    breed = models.CharField(max_length=300, null=True, blank=False)
 
     user = models.OneToOneField(to=AppUser, on_delete=models.CASCADE)
