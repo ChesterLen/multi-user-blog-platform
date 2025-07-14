@@ -52,3 +52,8 @@ class Pet(models.Model):
     breed = models.CharField(max_length=300, null=True, blank=True)
 
     user = models.OneToOneField(to=AppUser, on_delete=models.CASCADE)
+
+
+class PetImage(models.Model):
+    image = models.ImageField(upload_to='')
+    pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)

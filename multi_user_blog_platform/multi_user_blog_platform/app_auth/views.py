@@ -1,6 +1,6 @@
 from django.views import generic as views
 from django.urls import reverse_lazy
-from multi_user_blog_platform.app_auth import forms, tasks, tokens
+from multi_user_blog_platform.app_auth import forms, tasks, tokens, models
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import views as auth_views, get_user_model, logout
@@ -53,5 +53,11 @@ class LogoutView(views.View):
     
 
 class ProfileDetails(views.DetailView):
-    queryset = UserModel.objects.all()
+    queryset = models.Pet.objects.all()
     template_name = 'user/profile_details.html'
+
+
+class ProfileUpdateView(views.UpdateView):
+    queryset = models.Pet.objects.all()
+    form_class = forms.PetUpdateForm
+    template_name = 'user/profile_update.html'

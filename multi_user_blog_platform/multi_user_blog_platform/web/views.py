@@ -28,6 +28,6 @@ class DogCatView(views.View):
             specie = pet_kind_dict[first_key]
             pet.specie = specie
             pet.save()
-            return redirect('home_page')
+            return redirect('profile_update')
         
         return render(request, self.template_name)
