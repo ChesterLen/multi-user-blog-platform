@@ -14,20 +14,18 @@ class DogCatView(views.View):
     template_name = 'pet/dog_or_cat.html'
 
     def get(self, request):
-        pet = None
+        pet = getattr(request.user, 'pet', None)
 
-        if request.user:
-            pet = UserModel.objects.get(email=request.user.email).pet
-        
         pet_kind_dict = {
-            'dog': 'dog', 'cat': 'cat'
-            }
-        
-        if self.request.GET:
-            first_key = next(iter(self.request.GET))
-            specie = pet_kind_dict[first_key]
-            pet.specie = specie
+            'dog': 'dog',
+            'cat': 'cat'
+        }
+
+        first_key = next(iter(request.GET), None)
+
+        if first_key in pet_kind_dict and pet:
+            pet.specie = pet_kind_dict[first_key]
             pet.save()
-            return redirect('profile_update')
-        
+            return redirect('profile_update', pk=pet.pk)
+
         return render(request, self.template_name)

@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-q-8b4-o-uyg4tqzjg+=)zqhs*#9v=e#a_3n9#kjfjtcpx_g9+='
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 DEBUG = True
 

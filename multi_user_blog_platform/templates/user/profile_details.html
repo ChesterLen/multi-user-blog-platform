@@ -4,10 +4,17 @@
     <div class="profile-details">
         <img src="" alt="profile image">
         <div class="details">
-            <h1>Name:</h1>
-            <p>About me:</p>
-            <p>I am # years old.</p>
+            {% if object.name %}
+                <h1>{{ object.name }}</h1>
+            {% else %}
+                <h1>Name:</h1>
+            {% endif %}
+            
+            <p>{{ object.description }}</p>
+
+            <p>I am {{ object.age }} years old.</p>
         </div>
-        <button><a href="{% url 'profile_update' pk=request.user.pet.pk %}">Edit</a></button>
+        <!-- <button><a href="{% url 'profile_update' pk=request.user.pet.pk %}">Edit</a></button> -->
+         <a href="{% url 'dog_or_cat' %}">Edit</a>
     </div>
 {% endblock %}

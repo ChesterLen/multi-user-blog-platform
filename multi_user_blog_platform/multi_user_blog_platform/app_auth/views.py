@@ -1,5 +1,5 @@
 from django.views import generic as views
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from multi_user_blog_platform.app_auth import forms, tasks, tokens, models
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -61,3 +61,6 @@ class ProfileUpdateView(views.UpdateView):
     queryset = models.Pet.objects.all()
     form_class = forms.PetUpdateForm
     template_name = 'user/profile_update.html'
+
+    def get_success_url(self):
+        return reverse('profile_details', args=[self.object.pk])
