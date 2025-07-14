@@ -8,5 +8,5 @@ UserModel = get_user_model()
 @receiver(post_save, sender=UserModel)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        models.Profile.objects.create(user=instance)
-        instance.profile.save()
+        models.Pet.objects.create(user=instance)
+        instance.pet.save()

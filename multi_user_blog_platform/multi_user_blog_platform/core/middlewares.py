@@ -9,8 +9,8 @@ class AppUserProfileMiddleware:
     def _user_profile_middleware(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             try:
-                request.pet = request.user.profile
-            except request.et.DoesNotExist:
+                request.pet = request.user.pet
+            except request.pet.DoesNotExist:
                 request.pet = None
         else:
             request.pet = None

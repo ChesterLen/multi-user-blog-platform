@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="dog-or-cat">
+        <h1>I am...</h1>
+        <div class="dog-or-cat-imgs">
+            <div class="dog">
+                <form action="{% url 'dog_or_cat' %}" method="get">
+                    <input type="hidden" value="dog" name="dog" id="dog">
+                    <button><a href=""><img src="" alt="dog img"></a></button>
+                </form>
+            </div>
+
+            <div>
+                <form action="{% url 'dog_or_cat' %}" method="get">
+                    <input type="hidden" value="cat" name="cat" id="cat">
+                    <button><a href=""><img src="" alt="cat img"></a></button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

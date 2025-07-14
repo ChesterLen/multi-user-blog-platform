@@ -50,3 +50,8 @@ class LogoutView(views.View):
     def get(self, request):
         logout(request)
         return redirect('registration')
+    
+
+class ProfileDetails(views.DetailView):
+    queryset = UserModel.objects.all()
+    template_name = 'user/profile_details.html'

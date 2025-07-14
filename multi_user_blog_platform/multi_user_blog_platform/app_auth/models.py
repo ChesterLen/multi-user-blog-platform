@@ -45,9 +45,10 @@ class AppUser(auth_models.PermissionsMixin, auth_models.AbstractBaseUser):
 
 
 class Pet(models.Model):
-    name = models.CharField(max_length=300, null=False, blank=False)
+    name = models.CharField(max_length=300, null=True, blank=True)
     description = models.TextField(max_length=500, default='Hello there', null=True, blank=True)
-    age = models.IntegerField(default=0, null=False, blank=False)
-    breed = models.CharField(max_length=300, null=True, blank=False)
+    age = models.IntegerField(default=0, null=True, blank=True)
+    specie = models.CharField(max_length=300, null=True, blank=True)
+    breed = models.CharField(max_length=300, null=True, blank=True)
 
     user = models.OneToOneField(to=AppUser, on_delete=models.CASCADE)
