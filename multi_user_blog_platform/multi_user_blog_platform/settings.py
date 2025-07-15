@@ -98,7 +98,7 @@ AUTH_USER_MODEL = 'app_auth.AppUser'
 
 SITE_URL = os.environ.get('SITE_URL', '')
 
-LOGIN_REDIRECT_URL = reverse_lazy('registration')
+LOGIN_REDIRECT_URL = reverse_lazy('home_page')
 
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
