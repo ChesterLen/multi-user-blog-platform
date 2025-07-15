@@ -9,6 +9,17 @@ UserModel = get_user_model()
 class HomePageView(views.TemplateView):
     template_name = 'home/home_page.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        try:
+            featured_pets = models.Pet.objects.all()[:4]
+            context['featured_pets'] = featured_pets
+        except models.Pet.DoesNotExist as error:
+            print(error)
+
+        return context
+
 
 class DogCatView(views.View):
     template_name = 'pet/dog_or_cat.html'

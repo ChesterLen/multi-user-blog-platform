@@ -51,7 +51,7 @@ class LoginView(auth_views.LoginView):
 class LogoutView(views.View):
     def get(self, request):
         logout(request)
-        return redirect('registration')
+        return redirect('home_page')
     
 
 class ProfileDetails(views.DetailView):

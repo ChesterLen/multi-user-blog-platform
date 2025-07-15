@@ -30,7 +30,7 @@
                     {% if following_pet %}
                         <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
                     {% else %}
-                        {% if not request.user.is_authenticated %}
+                        {% if object.user != request.user %}
                             <a href="{% url 'follow' pk=object.pk %}">Follow</a>
                         {% endif %}
                     {% endif %}

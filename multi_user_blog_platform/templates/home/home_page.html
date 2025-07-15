@@ -12,12 +12,17 @@
     <div class="hero">
         <div class="home-text">
             <h2>Featured Pets 🐶🐱</h2>
-            <div class="featured-pets">
-                <div>[Bella 🐶]</div>
-                <div>[Luna 🐱]</div>
-                <div>[Ollie 🐹]</div>
-                <div>[Ziggy 🐢]</div>
-            </div>
+            {% if featured_pets %}
+                <div class="featured-pets">
+                    {% for pet in featured_pets %}
+                        {% if pet.specie == 'dog' %}
+                            <div>[<a href="{% url 'profile_details' pk=pet.pk %}">{{ pet.name }} 🐶</a>]</div>
+                        {% else %}
+                            <div>[<a href="{% url 'profile_details' pk=pet.pk %}">{{ pet.name }} 🐱</a>]</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
     </div>
 
