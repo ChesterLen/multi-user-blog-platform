@@ -62,21 +62,17 @@
     color: #f74904;
 }
 
-.profile-nav {
-    display: flex;
-    justify-content: center;
-    margin-top: 0.5em;
-}
-
-.profile-nav a {
-    text-decoration: none;
-    color: #ee6c0f;
-    font-weight: bold;
-    padding: 0.2em 0.5em;
-}
-
 .profile-details .profile-data {
     margin-left: 0.5em;
+}
+
+.profile-details .profile-data .follow {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-details .profile-data .follow a {
+    text-decoration: none;
 }
 
 .profile-details .details {
@@ -93,4 +89,17 @@
     border: 1px #eef07b solid;
     border-radius: 5px;
     font-weight: 600;
+}
+
+.profile-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5em;
+}
+
+.profile-nav a {
+    text-decoration: none;
+    color: #ee6c0f;
+    font-weight: bold;
+    padding: 0.2em 0.5em;
 }

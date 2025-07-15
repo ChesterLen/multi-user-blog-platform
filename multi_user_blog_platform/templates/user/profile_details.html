@@ -21,7 +21,20 @@
                 {% else %}
                     <h1>Name:</h1>
                 {% endif %}
+
                 <p>{{ object.age }} years old</p>
+
+                <div class="follow">
+                    <a href="#">following {{ followers }}</a>
+                    <a href="#">followers {{ following }}</a>
+                    {% if following_pet %}
+                        <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
+                    {% else %}
+                        {% if not request.user.is_authenticated %}
+                            <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
             <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a>
         </div>

@@ -7,6 +7,8 @@ from django.contrib.auth import views as auth_views, get_user_model, logout
 from django.shortcuts import redirect
 from django.conf import settings
 
+from django.http import HttpResponse
+
 
 UserModel = get_user_model()
 
@@ -56,6 +58,24 @@ class ProfileDetails(views.DetailView):
     queryset = models.Pet.objects.all()
     template_name = 'user/profile_details.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['followers'] = self.object.follower.all().count()
+        context['following'] = self.object.following.all().count()
+
+        try:
+            pet = models.Pet.objects.get(pk=self.object.pk)
+            user_pet = models.Pet.objects.get(pk=self.request.user.pet.pk)
+
+        except models.Pet.DoesNotExist as error:
+            print(error)
+
+        if pet and user_pet:
+            following = models.Follow.objects.filter(following=pet, follower=user_pet)
+            context['following_pet'] = following
+
+        return context
+
 
 class ProfileUpdateView(views.UpdateView):
     queryset = models.Pet.objects.all()
@@ -66,9 +86,38 @@ class ProfileUpdateView(views.UpdateView):
         return reverse('profile_details', args=[self.object.pk])
     
     def form_valid(self, form):
-        product = form.save()
+        pet = form.save()
         images = self.request.FILES.getlist('images')
 
         for image in images:
-            models.PetImage.objects.create(pet=product, image=image)
+            models.PetImage.objects.create(pet=pet, image=image)
         return super().form_valid(form)
+    
+
+def follow(request, pk):
+    try:
+        pet = models.Pet.objects.get(pk=pk)
+        user_pet = models.Pet.objects.get(pk=request.user.pet.pk)
+    except models.Pet.DoesNotExist as error:
+        print(error)
+
+    if pet != user_pet:
+        if not models.Follow.objects.filter(following=pet, follower=user_pet).exists():
+            models.Follow.objects.create(following=pet, follower=user_pet)
+        
+
+    return redirect('profile_details', pk=pk)
+
+
+def unfollow(request, pk):
+    try:
+        pet = models.Pet.objects.get(pk=pk)
+        user_pet = models.Pet.objects.get(pk=request.user.pet.pk)
+    except models.Pet.DoesNotExist as error:
+        print(error)
+
+    following = models.Follow.objects.get(following=pet, follower=user_pet)
+    if following:
+        following.delete()
+    
+    return redirect('profile_details', pk)
