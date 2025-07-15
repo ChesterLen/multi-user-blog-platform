@@ -4,27 +4,40 @@
 <div class="profile-container">
     {% if object.petimage_set.first.image.url %}
     <div class="banner">
-        <img src="{{ object.petimage_set.first.image.url }}" alt="profile banner">
+        <img src="{{ object.petimage_set.last.image.url }}" alt="profile banner">
     </div>
     {% else %}
     <div class="empty-banner"></div>
     {% endif %}
     <div class="profile-details">
         <div class="img-name">
-            <img id="profile-img" src="{{ object.petimage_set.first.image.url }}" alt="profile image">
-            {% if object.name %}
-                <h1>{{ object.name }}</h1>
-            {% else %}
-                <h1>Name:</h1>
-            {% endif %}
+            <div id="profile-img">
+                <img src="{{ object.petimage_set.all.1.image.url }}" alt="profile image">
+            </div>
+
+            <div>
+                {% if object.name %}
+                    <h1>{{ object.name }}</h1>
+                {% else %}
+                    <h1>Name:</h1>
+                {% endif %}
+                <p>{{ object.age }} years old</p>
+            </div>
+            <a href="{% url 'dog_or_cat' %}">Edit</a>
+        </div>
+
+        <div class="profile-nav">
+            <a href="#">Likes</a>
+            <a href="#">Friends</a>
+            <a href="#">Photos</a>
+            <a href="#">Interests</a>
         </div>
 
         <div class="details">
-            <p>{{ object.description }}</p>
-
-            <p>I am {{ object.age }} years old.</p>
-
-            <a href="{% url 'dog_or_cat' %}">Edit</a>
+            
+            <div class="description">
+                <p>{{ object.description }}</p>
+            </div>
         </div>
     </div>
 </div>

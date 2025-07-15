@@ -15,6 +15,7 @@ class UserRegistrationForm(auth_forms.UserCreationForm):
 
         self.fields['password1'].help_text = ''
         self.fields['password2'].help_text = ''
+        self.fields['password2'].label = 'Repeat password'
 
 
 class PetUpdateForm(forms.ModelForm):

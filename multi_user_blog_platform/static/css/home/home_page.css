@@ -28,8 +28,9 @@
 
 .navbar .profile-nav {
     padding: 0.3em;
-    border: 3px #F68537 solid;
+    border: 3px #D6D85D solid;
     border-radius: 50%;
+    margin-top: 0.1em;
 }
 
 .navbar .profile-nav a:hover {

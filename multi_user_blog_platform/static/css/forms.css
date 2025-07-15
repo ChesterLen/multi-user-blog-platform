@@ -17,12 +17,13 @@
 .form form div {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1em;
+    margin-bottom: 0.7em;
 }
 
 .form form div input {
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
+    padding-top: 0.3em;
 }
 
 .form p {
@@ -40,4 +41,9 @@
 .form form button {
     display: block;
     margin: 0 auto;
+    padding: 0.2em 0.5em;
+    border: none;
+    border-radius: 3px;
+    font-weight: bold;
+    cursor: pointer;
 }
