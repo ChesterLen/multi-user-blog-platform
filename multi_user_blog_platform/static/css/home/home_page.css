@@ -1,6 +1,7 @@
 .navbar {
     display: flex;
-    padding: 1em 2.5em;
+    align-items: center;
+    padding: 0.5em 2.5em;
     gap: 0.3em;
 }
 
@@ -23,6 +24,21 @@
 
 .navbar .logo a:hover {
     background: none;
+}
+
+.navbar .profile-nav {
+    padding: 0.3em;
+    border: 3px #F68537 solid;
+    border-radius: 50%;
+}
+
+.navbar .profile-nav a:hover {
+    background: none;
+}
+
+#profile-nav-img {
+    width: 25px;
+    height: 25px;
 }
 
 #home-img {
