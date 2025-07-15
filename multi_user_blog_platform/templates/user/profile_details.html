@@ -15,7 +15,7 @@
                 <img src="{{ object.petimage_set.all.1.image.url }}" alt="profile image">
             </div>
 
-            <div>
+            <div class="profile-data">
                 {% if object.name %}
                     <h1>{{ object.name }}</h1>
                 {% else %}
@@ -23,7 +23,7 @@
                 {% endif %}
                 <p>{{ object.age }} years old</p>
             </div>
-            <a href="{% url 'dog_or_cat' %}">Edit</a>
+            <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a>
         </div>
 
         <div class="profile-nav">

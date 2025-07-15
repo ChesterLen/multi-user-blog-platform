@@ -47,7 +47,6 @@
 .profile-details .img-name {
     display: flex;
     align-items: center;
-    gap: 1.5em;
 }
 
 .profile-details .img-name div {
@@ -58,7 +57,9 @@
 }
 
 .profile-details .img-name a {
-    margin-bottom: 1em;
+    margin-bottom: 0.7em;
+    margin-left: 0.5em;
+    color: #f74904;
 }
 
 .profile-nav {
@@ -72,6 +73,10 @@
     color: #ee6c0f;
     font-weight: bold;
     padding: 0.2em 0.5em;
+}
+
+.profile-details .profile-data {
+    margin-left: 0.5em;
 }
 
 .profile-details .details {
