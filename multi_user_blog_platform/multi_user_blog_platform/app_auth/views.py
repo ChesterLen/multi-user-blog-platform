@@ -121,7 +121,7 @@ def unfollow(request, pk):
     except models.Pet.DoesNotExist as error:
         print(error)
 
-    following = models.Follow.objects.get(followed=pet, follower=user_pet)
+    following = models.Follow.objects.filter(followed=pet, follower=user_pet)
     if following:
         following.delete()
     
@@ -134,14 +134,25 @@ class FollowersFollowingView(mixins.LoginRequiredMixin, views.DetailView):
     template_name = 'user/followers_following.html'
 
     def get_context_data(self, **kwargs):
-        print(self.object)
         context = super().get_context_data(**kwargs)
+        
         if 'followers' in str(self.request.path):
             followers = self.object.followers.all()
             context['followers'] = [models.Pet.objects.get(pk=pet.follower_id) for pet in followers]
+            
+            for pet in context['followers']:
+                following_pet = models.Follow.objects.filter(followed=pet, follower=self.request.user.pet)
+                if following_pet:
+                    context['following_pet'] = following_pet
+
 
         elif 'following' in str(self.request.path):
             following = self.object.following.all()
             context['following'] = [models.Pet.objects.get(pk=pet.followed_id) for pet in following]
+
+            for pet in context['following']:
+                followed_by_pet = models.Follow.objects.filter(followed=self.request.user.pet, follower=pet)
+                if followed_by_pet:
+                    context['followed_by_pet'] = followed_by_pet
 
         return context

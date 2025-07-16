@@ -48,13 +48,36 @@
                             <img src="{{ pet.petimage_set.first.image.url }}" alt="pet image">
                         </div>
                         <p>{{ pet.name }}</p>
+
+                        {% if following_pet %}
+                            <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
+                        {% else %}
+                            {% if object.user != request.user %}
+                                {% if followed_by_pet %}
+                                    <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
                     </div>
                 {% endfor %}
             </div>
         {% elif following %}
             <div class="following">
                 {% for pet in following %}
-                {{ pet }}
+                    <div class="card">
+                        <div class="pet-img">
+                            <img src="{{ pet.petimage_set.first.image.url }}" alt="pet image">
+                        </div>
+                        <p>{{ pet.name }}</p>
+                        {% if following_pet %}
+                            <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
+                        {% else %}
+                            {% if object.user != request.user %}
+                                <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}
