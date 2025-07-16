@@ -3,11 +3,9 @@ from django.urls import reverse_lazy, reverse
 from multi_user_blog_platform.app_auth import forms, tasks, tokens, models
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.auth import views as auth_views, get_user_model, logout
+from django.contrib.auth import views as auth_views, get_user_model, logout, mixins
 from django.shortcuts import redirect
 from django.conf import settings
-
-from django.http import HttpResponse
 
 
 UserModel = get_user_model()
@@ -17,6 +15,11 @@ class UserRegistrationView(views.CreateView):
     form_class = forms.UserRegistrationForm
     template_name = 'user/registration.html'
     success_url = reverse_lazy('registration')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('profile_details', request.user.pet.pk)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         user = form.save()
@@ -48,19 +51,21 @@ class LoginView(auth_views.LoginView):
     template_name = 'user/login.html'
 
 
-class LogoutView(views.View):
+class LogoutView(mixins.LoginRequiredMixin, views.View):
+    login_url = reverse_lazy('login')
     def get(self, request):
         logout(request)
         return redirect('home_page')
     
 
-class ProfileDetails(views.DetailView):
+class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
+    login_url = reverse_lazy('login')
     queryset = models.Pet.objects.all()
     template_name = 'user/profile_details.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['followers'] = self.object.follower.all().count()
+        context['followers'] = self.object.followers.all().count()
         context['following'] = self.object.following.all().count()
 
         try:
@@ -71,13 +76,13 @@ class ProfileDetails(views.DetailView):
             print(error)
 
         if pet and user_pet:
-            following = models.Follow.objects.filter(following=pet, follower=user_pet)
+            following = models.Follow.objects.filter(followed=pet, follower=user_pet)
             context['following_pet'] = following
 
         return context
 
 
-class ProfileUpdateView(views.UpdateView):
+class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
     queryset = models.Pet.objects.all()
     form_class = forms.PetUpdateForm
     template_name = 'user/profile_update.html'
@@ -102,8 +107,8 @@ def follow(request, pk):
         print(error)
 
     if pet != user_pet:
-        if not models.Follow.objects.filter(following=pet, follower=user_pet).exists():
-            models.Follow.objects.create(following=pet, follower=user_pet)
+        if not models.Follow.objects.filter(followed=pet, follower=user_pet).exists():
+            models.Follow.objects.create(followed=pet, follower=user_pet)
         
 
     return redirect('profile_details', pk=pk)
@@ -116,8 +121,27 @@ def unfollow(request, pk):
     except models.Pet.DoesNotExist as error:
         print(error)
 
-    following = models.Follow.objects.get(following=pet, follower=user_pet)
+    following = models.Follow.objects.get(followed=pet, follower=user_pet)
     if following:
         following.delete()
     
     return redirect('profile_details', pk)
+
+
+class FollowersFollowingView(mixins.LoginRequiredMixin, views.DetailView):
+    login_url = reverse_lazy('login')
+    queryset = models.Pet.objects.all()
+    template_name = 'user/followers_following.html'
+
+    def get_context_data(self, **kwargs):
+        print(self.object)
+        context = super().get_context_data(**kwargs)
+        if 'followers' in str(self.request.path):
+            followers = self.object.followers.all()
+            context['followers'] = [models.Pet.objects.get(pk=pet.follower_id) for pet in followers]
+
+        elif 'following' in str(self.request.path):
+            following = self.object.following.all()
+            context['following'] = [models.Pet.objects.get(pk=pet.followed_id) for pet in following]
+
+        return context

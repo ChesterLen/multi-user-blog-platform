@@ -60,5 +60,5 @@ class PetImage(models.Model):
 
 
 class Follow(models.Model):
-    following = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='following')
-    follower = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='follower')
+    followed = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='followers')
+    follower = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='following')

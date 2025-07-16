@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="follow-container">
+        <div class="profile-card">
+            <div class="img-name">
+                <div id="profile-img">
+                    <img src="{{ object.petimage_set.all.1.image.url }}" alt="profile image">
+                </div>
+
+                <div class="profile-data">
+                    {% if object.name %}
+                        <h1>{{ object.name }}</h1>
+                    {% else %}
+                        <h1>Name:</h1>  
+                    {% endif %}
+
+                    <p>{{ object.age }} years old</p>
+
+                    <div class="follow">
+                        <a href="{% url 'following' pk=object.pk %}">following {{ following|length }}</a>
+                        <a href="{% url 'followers' pk=object.pk %}">followers {{ followers|length }}</a>
+                        {% if following_pet %}
+                            <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
+                        {% else %}
+                            {% if object.user != request.user %}
+                                <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                        <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="follow-profile-nav">
+                <a href="#">Likes</a>
+                <a href="#">Friends</a>
+                <a href="#">Photos</a>
+                <a href="#">Interests</a>
+            </div>
+        </div>
+
+        {% if followers %}
+            <div class="followers">
+                {% for pet in followers %}
+                    <div class="card">
+                        <div class="pet-img">
+                            <img src="{{ pet.petimage_set.first.image.url }}" alt="pet image">
+                        </div>
+                        <p>{{ pet.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elif following %}
+            <div class="following">
+                {% for pet in following %}
+                {{ pet }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
