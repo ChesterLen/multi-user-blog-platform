@@ -2,33 +2,14 @@
 
 {% block content %}
     <div class="follow-container">
-        <div class="profile-card">
-            <div class="img-name">
-                <div id="profile-img">
-                    <img src="{{ object.petimage_set.all.1.image.url }}" alt="profile image">
-                </div>
+        {% for pet in followers %}
+            {{ pet.name }}
+            <a href="{% url 'follow' pk=pet.pk %}?next={{ request.get_full_path }}">Follow</a>
+        {% endfor %}
 
-                <div class="profile-data">
-                    {% if object.name %}
-                        <h1>{{ object.name }}</h1>
-                    {% else %}
-                        <h1>Name:</h1>  
-                    {% endif %}
-
-                    <p>{{ object.age }} years old</p>
-
-                    <div class="follow">
-                        <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="follow-profile-nav">
-                <a href="#">Likes</a>
-                <a href="#">Friends</a>
-                <a href="#">Photos</a>
-                <a href="#">Interests</a>
-            </div>
-        </div>
+        {% for pet in following %}
+            {{ pet.name }}
+            <a href="{% url 'unfollow' pk=pet.pk %}?next={{ request.get_full_path }}">Unfollow</a>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -24,6 +24,11 @@
 
                 <p>{{ object.age }} years old</p>
 
+                <div class="follow-data">
+                    <a href="{% url 'followers' pk=object.pk %}">{{ followers }} followers</a>
+                    <a href="{% url 'following' pk=object.pk %}">{{ following_pets }} following</a>
+                </div>
+
                 {% if following %}
                     <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
                 {% else %}

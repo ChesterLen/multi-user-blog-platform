@@ -65,8 +65,16 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         following = models.Follow.objects.filter(followed_pet=self.object.pk, follower_pet=self.request.user.pet.pk)
         context['following'] = following
+
+        followers = models.Follow.objects.filter(followed_pet=self.object.pk)
+        context['followers'] = len(followers)
+
+        following_pets = models.Follow.objects.filter(follower_pet=self.object.pk)
+        context['following_pets'] = len(following_pets)
+
         return context
 
 
@@ -99,7 +107,31 @@ def unfollow(request, pk):
     pet_to_unfollow = models.Pet.objects.get(pk=pk)
     pet_unfollower = models.Pet.objects.get(pk=request.user.pet.pk)
 
-    unfollow = models.Follow.objects.filter(followed_pet=pet_to_unfollow, follower_pet=pet_unfollower)
-    unfollow.delete()
+    unfollow = models.Follow.objects.filter(followed_pet=pet_to_unfollow, follower_pet=pet_unfollower).first()
+
+    if unfollow:
+        unfollow.delete()
+
+    next_url = request.GET.get('next')
+
+    if next_url:
+        return redirect(next_url)
 
     return redirect('profile_details', pk)
+
+
+class Followers(views.DetailView):
+    queryset = models.Pet.objects.all()
+    template_name = 'user/followers_following.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if 'followers' in str(self.request.path):
+            followers = models.Follow.objects.filter(followed_pet=self.object.pk)
+            context['followers'] = [pet.follower_pet for pet in followers]
+        elif 'following' in str(self.request.path):
+            following = models.Follow.objects.filter(follower_pet=self.object.pk)
+            context['following'] = [pet.followed_pet for pet in following]
+
+        return context
