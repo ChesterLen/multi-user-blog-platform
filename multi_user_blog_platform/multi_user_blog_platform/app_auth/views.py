@@ -63,24 +63,6 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
     queryset = models.Pet.objects.all()
     template_name = 'user/profile_details.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['followers'] = self.object.followers.all().count()
-        context['following'] = self.object.following.all().count()
-
-        try:
-            pet = models.Pet.objects.get(pk=self.object.pk)
-            user_pet = models.Pet.objects.get(pk=self.request.user.pet.pk)
-
-        except models.Pet.DoesNotExist as error:
-            print(error)
-
-        if pet and user_pet:
-            following = models.Follow.objects.filter(followed=pet, follower=user_pet)
-            context['following_pet'] = following
-
-        return context
-
 
 class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
     queryset = models.Pet.objects.all()
@@ -97,62 +79,3 @@ class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
         for image in images:
             models.PetImage.objects.create(pet=pet, image=image)
         return super().form_valid(form)
-    
-
-def follow(request, pk):
-    try:
-        pet = models.Pet.objects.get(pk=pk)
-        user_pet = models.Pet.objects.get(pk=request.user.pet.pk)
-    except models.Pet.DoesNotExist as error:
-        print(error)
-
-    if pet != user_pet:
-        if not models.Follow.objects.filter(followed=pet, follower=user_pet).exists():
-            models.Follow.objects.create(followed=pet, follower=user_pet)
-        
-
-    return redirect('profile_details', pk=pk)
-
-
-def unfollow(request, pk):
-    try:
-        pet = models.Pet.objects.get(pk=pk)
-        user_pet = models.Pet.objects.get(pk=request.user.pet.pk)
-    except models.Pet.DoesNotExist as error:
-        print(error)
-
-    following = models.Follow.objects.filter(followed=pet, follower=user_pet)
-    if following:
-        following.delete()
-    
-    return redirect('profile_details', pk)
-
-
-class FollowersFollowingView(mixins.LoginRequiredMixin, views.DetailView):
-    login_url = reverse_lazy('login')
-    queryset = models.Pet.objects.all()
-    template_name = 'user/followers_following.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        if 'followers' in str(self.request.path):
-            followers = self.object.followers.all()
-            context['followers'] = [models.Pet.objects.get(pk=pet.follower_id) for pet in followers]
-            
-            for pet in context['followers']:
-                following_pet = models.Follow.objects.filter(followed=pet, follower=self.request.user.pet)
-                if following_pet:
-                    context['following_pet'] = following_pet
-
-
-        elif 'following' in str(self.request.path):
-            following = self.object.following.all()
-            context['following'] = [models.Pet.objects.get(pk=pet.followed_id) for pet in following]
-
-            for pet in context['following']:
-                followed_by_pet = models.Follow.objects.filter(followed=self.request.user.pet, follower=pet)
-                if followed_by_pet:
-                    context['followed_by_pet'] = followed_by_pet
-
-        return context

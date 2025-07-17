@@ -23,18 +23,6 @@
                 {% endif %}
 
                 <p>{{ object.age }} years old</p>
-
-                <div class="follow">
-                    <a href="{% url 'following' pk=object.pk %}">following {{ following }}</a>
-                    <a href="{% url 'followers' pk=object.pk %}">followers {{ followers }}</a>
-                    {% if following_pet %}
-                        <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
-                    {% else %}
-                        {% if object.user != request.user %}
-                            <a href="{% url 'follow' pk=object.pk %}">Follow</a>
-                        {% endif %}
-                    {% endif %}
-                </div>
             </div>
             <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a>
         </div>
