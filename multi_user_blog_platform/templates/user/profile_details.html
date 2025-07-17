@@ -22,8 +22,6 @@
                     <h1>Name:</h1>
                 {% endif %}
 
-                <p>{{ object.age }} years old</p>
-
                 <div class="follow-data">
                     <i class="fa-solid fa-user-group"></i>
                     <p><a href="{% url 'followers' pk=object.pk %}">{{ followers }} followers</a></p>
@@ -41,10 +39,10 @@
         </div>
 
         <div class="profile-nav">
-            <a href="#">Likes</a>
+            <a href="#">Publications</a>
+            <a href="#">Info</a>
             <a href="#">Friends</a>
             <a href="#">Photos</a>
-            <a href="#">Interests</a>
         </div>
 
         <div class="details">

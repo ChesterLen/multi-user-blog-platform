@@ -1,0 +1,34 @@
+.follow-container {
+    margin-top: 2.5em;
+}
+
+.pet-details {
+    width: 270px;
+    color: #ee6c0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    border: 1px #ee6c0f solid;
+    border-radius: 5px;
+    padding: 0.3em 1em;
+}
+
+.pet-details a {
+    text-decoration: none;
+    color: #ee6c0f;
+}
+
+.pet-img {
+    background-color: #ECEDB0;
+    border: 4px #ee6c0f solid;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.pet-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}

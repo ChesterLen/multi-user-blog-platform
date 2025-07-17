@@ -9,6 +9,11 @@ UserModel = get_user_model()
 class HomePageView(views.TemplateView):
     template_name = 'home/home_page.html'
 
+    def get_template_names(self):
+        if self.request.user.is_authenticated:
+            self.template_name = 'home/wall.html'
+        return super().get_template_names()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 

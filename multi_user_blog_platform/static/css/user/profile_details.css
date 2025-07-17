@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 0.5em;
 }
 
 .profile-container .empty-banner {
@@ -16,12 +15,13 @@
 .profile-container .banner img {
     width: 90vw;
     height: 300px;
-    border-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .profile-container #profile-img {
     background-color: #ECEDB0;
-    border: 6px #D6D85D solid;
+    border: 6px #ECEDB0 solid;
     border-radius: 50%;
     margin-top: -2em;
     width: 150px;
@@ -64,6 +64,11 @@
     text-decoration: none;
     margin-bottom: 0.7em;
     margin-left: 0.5em;
+    color: #f74904;
+}
+
+.profile-details .img-name a {
+    text-decoration: none;
     color: #f74904;
 }
 

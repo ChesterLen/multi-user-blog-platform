@@ -100,6 +100,12 @@ def follow(request, pk):
     pet_follower = models.Pet.objects.get(pk=request.user.pet.pk)
 
     models.Follow.objects.create(followed_pet=pet_to_follow, follower_pet=pet_follower)
+
+    next_url = request.GET.get('next')
+
+    if next_url:
+        return redirect(next_url)
+    
     return redirect('profile_details', pk)
 
 
@@ -133,5 +139,8 @@ class Followers(views.DetailView):
         elif 'following' in str(self.request.path):
             following = models.Follow.objects.filter(follower_pet=self.object.pk)
             context['following'] = [pet.followed_pet for pet in following]
+
+        following_pets = models.Follow.objects.filter(follower_pet=self.object.pk)
+        context['following_pets'] = [pet.followed_pet for pet in following_pets]
 
         return context
