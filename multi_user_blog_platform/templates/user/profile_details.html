@@ -17,7 +17,7 @@
 
             <div class="profile-data">
                 {% if object.name %}
-                    <h1>{{ object.name }}</h1>
+                    <h1>{{ object.name }} <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h1>
                 {% else %}
                     <h1>Name:</h1>
                 {% endif %}
@@ -25,8 +25,9 @@
                 <p>{{ object.age }} years old</p>
 
                 <div class="follow-data">
-                    <a href="{% url 'followers' pk=object.pk %}">{{ followers }} followers</a>
-                    <a href="{% url 'following' pk=object.pk %}">{{ following_pets }} following</a>
+                    <i class="fa-solid fa-user-group"></i>
+                    <p><a href="{% url 'followers' pk=object.pk %}">{{ followers }} followers</a></p>
+                    <p><a href="{% url 'following' pk=object.pk %}">{{ following_pets }} following</a></p>
                 </div>
 
                 {% if following %}
@@ -37,7 +38,6 @@
                     {% endif %}
                 {% endif %}
             </div>
-            <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a>
         </div>
 
         <div class="profile-nav">

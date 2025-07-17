@@ -38,6 +38,11 @@
     font-weight: normal;
 }
 
+.profile-container h1 i {
+    color: #f74904;
+    font-size: 17px;
+}
+
 .profile-details {
     display: flex;
     flex-direction: column;
@@ -53,26 +58,33 @@
     color: #f7630c;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
-.profile-details .img-name a {
+.profile-details .img-name > a {
+    text-decoration: none;
     margin-bottom: 0.7em;
     margin-left: 0.5em;
     color: #f74904;
 }
 
-.profile-details .profile-data {
-    margin-left: 0.5em;
-}
-
-.profile-details .profile-data .follow {
+.profile-details .img-name .follow-data {
     display: flex;
     flex-direction: row;
+    gap: 0.5em;
+    margin-top: 0.5em;
 }
 
-.profile-details .profile-data .follow a {
+.profile-details .img-name .follow-data i {
+    color: #f7630c;
+}
+
+.profile-details .img-name .follow-data a {
     text-decoration: none;
+    color: #f74904;
+}
+
+.profile-details .profile-data {
+    margin-left: 0.5em;
 }
 
 .profile-details .details {
