@@ -57,3 +57,8 @@ class Pet(models.Model):
 class PetImage(models.Model):
     image = models.ImageField(upload_to='')
     pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
+
+
+class Follow(models.Model):
+    followed_pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='followed_pet')
+    follower_pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='follower_pet')

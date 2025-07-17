@@ -63,6 +63,12 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
     queryset = models.Pet.objects.all()
     template_name = 'user/profile_details.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        following = models.Follow.objects.filter(followed_pet=self.object.pk, follower_pet=self.request.user.pet.pk)
+        context['following'] = following
+        return context
+
 
 class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
     queryset = models.Pet.objects.all()
@@ -79,3 +85,21 @@ class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
         for image in images:
             models.PetImage.objects.create(pet=pet, image=image)
         return super().form_valid(form)
+    
+
+def follow(request, pk):
+    pet_to_follow = models.Pet.objects.get(pk=pk)
+    pet_follower = models.Pet.objects.get(pk=request.user.pet.pk)
+
+    models.Follow.objects.create(followed_pet=pet_to_follow, follower_pet=pet_follower)
+    return redirect('profile_details', pk)
+
+
+def unfollow(request, pk):
+    pet_to_unfollow = models.Pet.objects.get(pk=pk)
+    pet_unfollower = models.Pet.objects.get(pk=request.user.pet.pk)
+
+    unfollow = models.Follow.objects.filter(followed_pet=pet_to_unfollow, follower_pet=pet_unfollower)
+    unfollow.delete()
+
+    return redirect('profile_details', pk)
