@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<form action="{% url 'publication' %}" method="post" enctype="multipart/form-data">
+    {{ form }}
+    {% csrf_token %}
+    <button>Publish</button>
+</form>
 {% endblock %}

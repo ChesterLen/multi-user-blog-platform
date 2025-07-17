@@ -1,7 +1,9 @@
 from django.views import generic as views
 from multi_user_blog_platform.app_auth import models
+from multi_user_blog_platform.web import forms
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 
 UserModel = get_user_model()
 
@@ -45,3 +47,17 @@ class DogCatView(views.View):
             return redirect('profile_update', pk=pet.pk)
 
         return render(request, self.template_name)
+    
+
+class PublicationView(views.CreateView):
+    template_name = 'home/wall.html'
+    form_class = forms.PublicationForm
+    
+    def get_success_url(self):
+        return reverse_lazy('profile_details', kwargs={'pk': self.request.user.pet.pk})
+    
+    def form_valid(self, form):
+        publication = form.save(commit=False)
+        publication.pet = self.request.pet
+        publication = form.save(commit=True)
+        return super().form_valid(form)

@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="profile-container">
+<div class="follow-profile-container">
     {% if object.petimage_set.first.image.url %}
-    <div class="banner">
+    <div class="follow-banner">
         <img src="{{ object.petimage_set.last.image.url }}" alt="profile banner">
     </div>
     {% else %}
-    <div class="empty-banner"></div>
+    <div class="follow-empty-banner"></div>
     {% endif %}
-    <div class="profile-details">
-        <div class="img-name">
-            <div id="profile-img">
+    <div class="follow-profile-details">
+        <div class="follow-img-name">
+            <div id="follow-profile-img">
                 <img src="{{ object.petimage_set.all.1.image.url }}" alt="profile image">
             </div>
 
-            <div class="profile-data">
+            <div class="follow-profile-data">
                 {% if object.name %}
                     <h1>{{ object.name }} <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h1>
                 {% else %}
                     <h1>Name:</h1>
                 {% endif %}
 
-                <div class="follow-data">
+                <div class="follow-follow-data">
                     <i class="fa-solid fa-user-group"></i>
                     <p><a href="{% url 'followers' pk=object.pk %}">{{ followers|length }} followers</a></p>
                     <p><a href="{% url 'following' pk=object.pk %}">{{ following_pets|length }} following</a></p>
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="profile-nav">
+        <div class="follow-profile-nav">
             <a href="#">Publications</a>
             <a href="#">Info</a>
             <a href="#">Friends</a>
@@ -46,10 +46,10 @@
         </div>
     </div>
 
-    <div class="follow-container">
+    <div class="follow-follow-container">
         {% for pet in followers %}
-            <div class="pet-details">
-                <div class="pet-img">
+            <div class="follow-pet-details">
+                <div class="follow-pet-img">
                     <img src="{{ pet.petimage_set.first.image.url }}" alt="pet image">
                 </div>
                 <a href="{% url 'profile_details' pk=pet.pk %}">{{ pet.name }}</a>
@@ -65,7 +65,9 @@
 
         {% for pet in following %}
             {{ pet.name }}
-            <a href="{% url 'unfollow' pk=pet.pk %}?next={{ request.get_full_path }}">Unfollow</a>
+            {% if request.pet != pet %}
+                <a href="{% url 'unfollow' pk=pet.pk %}?next={{ request.get_full_path }}">Unfollow</a>
+            {% endif %}
         {% endfor %}
     </div>
 </div>

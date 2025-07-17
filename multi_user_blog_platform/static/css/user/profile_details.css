@@ -1,9 +1,11 @@
 .profile-container {
     width: 100%;
-    min-height: 100vh;
+    margin-top: -13em;
+    padding-bottom: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #ECEDB0;
 }
 
 .profile-container .empty-banner {

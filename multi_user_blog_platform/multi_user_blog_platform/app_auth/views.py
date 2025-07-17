@@ -136,7 +136,10 @@ class Followers(views.DetailView):
         if 'followers' in str(self.request.path):
             followers = models.Follow.objects.filter(followed_pet=self.object.pk)
             context['followers'] = [pet.follower_pet for pet in followers]
+            
         elif 'following' in str(self.request.path):
+            followers = models.Follow.objects.filter(followed_pet=self.object.pk)
+            context['followers'] = [pet.follower_pet for pet in followers]
             following = models.Follow.objects.filter(follower_pet=self.object.pk)
             context['following'] = [pet.followed_pet for pet in following]
 
