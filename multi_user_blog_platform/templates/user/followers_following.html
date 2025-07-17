@@ -4,7 +4,9 @@
     <div class="follow-container">
         {% for pet in followers %}
             {{ pet.name }}
-            <a href="{% url 'follow' pk=pet.pk %}?next={{ request.get_full_path }}">Follow</a>
+            {% if request.pet != pet %}
+                <a href="{% url 'follow' pk=pet.pk %}?next={{ request.get_full_path }}">Follow</a>
+            {% endif %}
         {% endfor %}
 
         {% for pet in following %}

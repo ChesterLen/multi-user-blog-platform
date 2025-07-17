@@ -32,7 +32,9 @@
                 {% if following %}
                     <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
                 {% else %}
-                    <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                    {% if request.pet != object %}
+                        <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                    {% endif %}
                 {% endif %}
             </div>
             <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a>
