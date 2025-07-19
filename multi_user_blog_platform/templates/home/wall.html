@@ -1,17 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if publications %}
-        <div class="publication-container">
-            {% for publication in publications %}
-            <div class="publication-card">
-                {% if publication.image %}
-                    <img src="{{ publication.image.url }}" alt="publication image">
-                {% endif %}
-                <h3>{{ publication.title }}</h3>
-                <p>{{ publication.text }}</p>
-            </div>
+    {% if pets %}
+        <ul>
+            {% for pet in pets %}
+                <li><a href="{% url 'profile_details' pk=pet.pk %}">{{ pet.user.email }}</a></li>
             {% endfor %}
-        </div>
+        </ul>
     {% endif %}
 {% endblock %}

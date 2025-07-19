@@ -67,6 +67,7 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
         context = super().get_context_data(**kwargs)
 
         following = models.Follow.objects.filter(followed_pet=self.object.pk, follower_pet=self.request.user.pet.pk)
+        print(following)
         context['following'] = following
 
         followers = models.Follow.objects.filter(followed_pet=self.object.pk)
@@ -107,8 +108,6 @@ class Followers(views.DetailView):
             context['followers'] = [pet.follower_pet for pet in followers]
             
         elif 'following' in str(self.request.path):
-            followers = models.Follow.objects.filter(followed_pet=self.object.pk)
-            context['followers'] = [pet.follower_pet for pet in followers]
             following = models.Follow.objects.filter(follower_pet=self.object.pk)
             context['following'] = [pet.followed_pet for pet in following]
 

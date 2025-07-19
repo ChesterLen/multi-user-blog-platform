@@ -5,7 +5,7 @@
     <div class="profile-container">
         {% if object.petimage_set.first %}
             <div class="banner">
-                <img src="{{ request.pet.petimage_set.first.image.url }}" alt="profile banner">
+                <img src="{{ object.petimage_set.first.image.url }}" alt="profile banner">
             </div>
         {% else %}
             <div class="empty-banner"></div>
@@ -38,6 +38,14 @@
                     <a href="{% url 'followers' pk=object.pk %}" id="followers">{{ followers }} followers</a> 
                     <a href="{% url 'following' pk=object.pk %}" id="following">{{ following_pets }} following</a>
                 </p>
+
+                {% if following %}
+                    <a href="{% url 'unfollow' pk=object.pk %}">Unollow</a>
+                {% else %}
+                    {% if request.pet.pk != object.pk %}
+                        <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
         <p>{{ object.description }}</p>

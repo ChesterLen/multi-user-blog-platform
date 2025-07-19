@@ -20,6 +20,7 @@ class HomePageView(views.TemplateView):
         try:
             featured_pets = models.Pet.objects.all()[:4]
             context['featured_pets'] = featured_pets
+            context['pets'] = models.Pet.objects.all()
         except models.Pet.DoesNotExist as error:
             print(error)
 
