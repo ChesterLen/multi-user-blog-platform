@@ -13,14 +13,14 @@
     <div class="profile-details">
         <div class="img-name">
             <div id="profile-img">
-                <img src="{{ object.petimage_set.all.1.image.url }}" alt="profile image">
+                <img src="{{ object.petimage_set.first.image.url }}" alt="profile image">
             </div>
 
             <div class="profile-data">
                 {% if object.name %}
                     <h1>{{ object.name }} <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h1>
                 {% else %}
-                    <h1>Name:</h1>
+                    <h1>Name: <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h1>
                 {% endif %}
 
                 <div class="follow-data">
@@ -54,9 +54,13 @@
         </div>
     </div>
 </div>
-<div id="form-pop-up">dsa</div>
+<div id="form-pop-up">What's on your mind?</div>
 {% endblock %}
 
 {% block extra_scripts %}
     <script src="{% static 'js/publication.js' %}"></script>
+    <script>
+        const popUpFormAction = Urls.publication();
+        let CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
 {% endblock %}

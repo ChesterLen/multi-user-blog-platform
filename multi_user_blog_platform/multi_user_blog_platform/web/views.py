@@ -50,7 +50,7 @@ class DogCatView(views.View):
     
 
 class PublicationView(views.CreateView):
-    template_name = 'home/wall.html'
+    template_name = 'user/profile_details.html'
     form_class = forms.PublicationForm
     
     def get_success_url(self):

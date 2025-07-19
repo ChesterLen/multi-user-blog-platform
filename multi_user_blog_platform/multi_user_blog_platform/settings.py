@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 
     'multi_user_blog_platform.app_auth',
     'multi_user_blog_platform.web',
+    'django_js_reverse',
 ]
 
 MIDDLEWARE = [
