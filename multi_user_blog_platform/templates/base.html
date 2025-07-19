@@ -15,9 +15,20 @@
 <body>
     <header>
         <div class="navbar">
-            <div class="logo"><a href="{% url 'home_page' %}">🐾</a></div>
-            <div class="home"><a href="{% url 'home_page' %}">Home</a></div>
+            {% if request.user.is_authenticated %}
+                <div class="logo"><a href="{% url 'publication' %}">🐾</a></div>
+            {% else %}
+                <div class="logo"><a href="{% url 'home_page' %}">🐾</a></div>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+                <div class="home"><a href="{% url 'publication' %}">Home</a></div>
+            {% else %}
+                <div class="home"><a href="{% url 'home_page' %}">Home</a></div>
+            {% endif %}
+
             <div class="explore"><a href="#">Eplore</a></div>
+
             {% if request.user.is_authenticated %}
                 <div class="login"><a href="{% url 'logout' %}">Logout</a></div>
                 <div class="profile-nav" ><a href="{% url 'profile_details' pk=request.user.pet.pk %}"><img id="profile-nav-img" src="{{ request.user.pet.petimage_set.first.image.url }}"></a></div>
@@ -41,5 +52,8 @@
     </footer>
 
     <script src="https://kit.fontawesome.com/ce003ec2a1.js" crossorigin="anonymous"></script>
+
+    {% block extra_scripts %}
+    {% endblock %}
 </body>
 </html>
