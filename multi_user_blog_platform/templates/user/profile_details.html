@@ -19,7 +19,28 @@
             {% else %}
                 <div class="no-profile-img"></div>
             {% endif %}
+            
+            <div class="profile-data">
+                {% if object.name %}
+                    <h3>Name: {{ object.name }} <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h3>
+                {% else %}
+                    <h3>Name: <i class="fa-solid fa-gear"></i></h3>
+                {% endif %}
+
+                {% if object.breed %}
+                    <p>Breed: {{ object.breed }}</p>
+                {% else %}
+                    <p>Breed: </p>
+                {% endif %}
+
+                <p>
+                    <i class="fa-solid fa-user-group"></i> 
+                    <a href="{% url 'followers' pk=object.pk %}" id="followers">{{ followers }} followers</a> 
+                    <a href="{% url 'following' pk=object.pk %}" id="following">{{ following_pets }} following</a>
+                </p>
+            </div>
         </div>
+        <p>{{ object.description }}</p>
     </div>
 {% endblock %}
 

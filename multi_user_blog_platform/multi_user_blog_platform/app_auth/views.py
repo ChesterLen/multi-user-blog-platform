@@ -81,7 +81,7 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
 class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
     queryset = models.Pet.objects.all()
     form_class = forms.PetUpdateForm
-    template_name = 'user/profile_update.html'
+    template_name = 'user/profile_edit.html'
 
     def get_success_url(self):
         return reverse('profile_details', args=[self.object.pk])
@@ -93,6 +93,29 @@ class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
         for image in images:
             models.PetImage.objects.create(pet=pet, image=image)
         return super().form_valid(form)
+    
+
+class Followers(views.DetailView):
+    queryset = models.Pet.objects.all()
+    template_name = 'user/followers_following.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if 'followers' in str(self.request.path):
+            followers = models.Follow.objects.filter(followed_pet=self.object.pk)
+            context['followers'] = [pet.follower_pet for pet in followers]
+            
+        elif 'following' in str(self.request.path):
+            followers = models.Follow.objects.filter(followed_pet=self.object.pk)
+            context['followers'] = [pet.follower_pet for pet in followers]
+            following = models.Follow.objects.filter(follower_pet=self.object.pk)
+            context['following'] = [pet.followed_pet for pet in following]
+
+        following_pets = models.Follow.objects.filter(follower_pet=self.object.pk)
+        context['following_pets'] = [pet.followed_pet for pet in following_pets]
+
+        return context
     
 
 def follow(request, pk):
@@ -124,26 +147,3 @@ def unfollow(request, pk):
         return redirect(next_url)
 
     return redirect('profile_details', pk)
-
-
-class Followers(views.DetailView):
-    queryset = models.Pet.objects.all()
-    template_name = 'user/followers_following.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        if 'followers' in str(self.request.path):
-            followers = models.Follow.objects.filter(followed_pet=self.object.pk)
-            context['followers'] = [pet.follower_pet for pet in followers]
-            
-        elif 'following' in str(self.request.path):
-            followers = models.Follow.objects.filter(followed_pet=self.object.pk)
-            context['followers'] = [pet.follower_pet for pet in followers]
-            following = models.Follow.objects.filter(follower_pet=self.object.pk)
-            context['following'] = [pet.followed_pet for pet in following]
-
-        following_pets = models.Follow.objects.filter(follower_pet=self.object.pk)
-        context['following_pets'] = [pet.followed_pet for pet in following_pets]
-
-        return context

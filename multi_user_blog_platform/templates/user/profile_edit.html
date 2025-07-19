@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="form">
-        <form action="{% url 'profile_update' pk=request.user.pet.pk %}" method="post" enctype="multipart/form-data">
+        <form action="{% url 'profile_edit' pk=request.user.pet.pk %}" method="post" enctype="multipart/form-data">
             <label for="images">Images:</label>
             <input type="file" name="images" id="images" multiple>
             {{ form }}

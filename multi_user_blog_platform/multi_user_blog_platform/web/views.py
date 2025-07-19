@@ -42,6 +42,6 @@ class DogCatView(views.View):
         if first_key and first_key in pet_kind_dict and pet:
             pet.specie = pet_kind_dict[first_key]
             pet.save()
-            return redirect('profile_update', pk=pet.pk)
+            return redirect('profile_edit', pk=pet.pk)
 
         return render(request, self.template_name)

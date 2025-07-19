@@ -36,10 +36,6 @@
     height: 50px;
 }
 
-.navbar .profile-nav a:hover {
-    background: none;
-}
-
 #profile-nav-img {
     width: 100%;
     height: 100%;
@@ -47,6 +43,13 @@
 }
 
 #profile-nav-img:hover {
+    cursor: pointer;
+}
+
+#no-profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     cursor: pointer;
 }
 

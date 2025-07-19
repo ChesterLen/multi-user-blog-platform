@@ -26,6 +26,9 @@
                     {% if request.pet.petimage_set.first %}
                         <img id="profile-nav-img" src="{{ request.user.pet.petimage_set.first.image.url }}">
                         <input type="hidden" value="{{ request.pet.pk }}" id="pet_pk">
+                    {% else %}
+                        <div id="no-profile-img"></div>
+                        <input type="hidden" value="{{ request.pet.pk }}" id="pet_pk">
                     {% endif %}
                 </div>
             {% else %}
