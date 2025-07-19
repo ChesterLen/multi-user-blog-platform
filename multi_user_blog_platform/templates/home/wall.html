@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{% url 'publication' %}" method="post" enctype="multipart/form-data">
-    {{ form }}
-    {% csrf_token %}
-    <button>Publish</button>
-</form>
+    {% if publications %}
+        <div class="publication-container">
+            {% for publication in publications %}
+            <div class="publication-card">
+                {% if publication.image %}
+                    <img src="{{ publication.image.url }}" alt="publication image">
+                {% endif %}
+                <h3>{{ publication.title }}</h3>
+                <p>{{ publication.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

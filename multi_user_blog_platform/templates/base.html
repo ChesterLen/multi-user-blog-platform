@@ -15,17 +15,8 @@
 <body>
     <header>
         <div class="navbar">
-            {% if request.user.is_authenticated %}
-                <div class="logo"><a href="{% url 'publication' %}">🐾</a></div>
-            {% else %}
-                <div class="logo"><a href="{% url 'home_page' %}">🐾</a></div>
-            {% endif %}
-
-            {% if request.user.is_authenticated %}
-                <div class="home"><a href="{% url 'publication' %}">Home</a></div>
-            {% else %}
-                <div class="home"><a href="{% url 'home_page' %}">Home</a></div>
-            {% endif %}
+            <div class="logo"><a href="{% url 'home_page' %}">🐾</a></div>
+            <div class="home"><a href="{% url 'home_page' %}">Home</a></div>
 
             <div class="explore"><a href="#">Eplore</a></div>
 

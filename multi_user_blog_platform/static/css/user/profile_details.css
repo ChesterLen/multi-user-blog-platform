@@ -1,6 +1,5 @@
 .profile-container {
     width: 100%;
-    margin-top: -13em;
     padding-bottom: 1em;
     display: flex;
     flex-direction: column;
@@ -121,4 +120,25 @@
     color: #ee6c0f;
     font-weight: bold;
     padding: 0.2em 0.5em;
+}
+
+.publication-container {
+    margin: 1em 0;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+}
+
+.publication-container .publication-card {
+    width: 80%;
+    height: auto;
+    color: #f7630c;
+    background-color: #ECEDB0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
 }

@@ -25,15 +25,26 @@
 
                 <div class="follow-data">
                     <i class="fa-solid fa-user-group"></i>
-                    <p><a href="{% url 'followers' pk=object.pk %}">{{ followers }} followers</a></p>
-                    <p><a href="{% url 'following' pk=object.pk %}">{{ following_pets }} following</a></p>
+                    {% if followers %}
+                        <p><a href="{% url 'followers' pk=object.pk %}">{{ followers }} followers</a></p>
+                    {% else %}
+                        <p><a href="#">{{ followers }} followers</a></p>
+                    {% endif %}
+
+                    {% if following %}
+                        <p><a href="{% url 'following' pk=object.pk %}">{{ following_pets }} following</a></p>
+                    {% else %}
+                        <p><a href="#">{{ following_pets }} following</a></p>
+                    {% endif %}
                 </div>
 
                 {% if following %}
                     <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
                 {% else %}
                     {% if request.pet != object %}
-                        <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                        {% if following %}
+                            <a href="{% url 'follow' pk=object.pk %}">Follow</a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             </div>
@@ -55,12 +66,28 @@
     </div>
 </div>
 <div id="form-pop-up">What's on your mind?</div>
+
+{% if publications %}
+    <div class="publication-container">
+        {% for publication in publications %}
+            <div class="publication-card">
+                {% if publication.image %}
+                    <img src="{{ publication.image.url }}" alt="publication image">
+                {% endif %}
+                <h3>{{ publication.title }}</h3>
+                <p>{{ publication.text }}</p>
+                <form action="{% url 'comment' %}" method="post">
+                    <input type="hidden" name="publication_id" value="{{ publication.pk }}">
+                    <input type="text" name="comment" id="comment">
+                    {% csrf_token %}
+                    <button>Comment</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}
 
 {% block extra_scripts %}
     <script src="{% static 'js/publication.js' %}"></script>
-    <script>
-        const popUpFormAction = Urls.publication();
-        let CSRF_TOKEN = '{{ csrf_token }}';
-    </script>
 {% endblock %}
