@@ -2,92 +2,26 @@
 {% load static %}
 
 {% block content %}
-<div class="profile-container">
-    {% if object.petimage_set.first.image.url %}
-    <div class="banner">
-        <img src="{{ object.petimage_set.last.image.url }}" alt="profile banner">
-    </div>
-    {% else %}
-    <div class="empty-banner"></div>
-    {% endif %}
-    <div class="profile-details">
-        <div class="img-name">
-            <div id="profile-img">
-                <img src="{{ object.petimage_set.first.image.url }}" alt="profile image">
+    <div class="profile-container">
+        {% if object.petimage_set.first %}
+            <div class="banner">
+                <img src="{{ request.pet.petimage_set.first.image.url }}" alt="profile banner">
             </div>
+        {% else %}
+            <div class="empty-banner"></div>
+        {% endif %}
 
-            <div class="profile-data">
-                {% if object.name %}
-                    <h1>{{ object.name }} <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h1>
-                {% else %}
-                    <h1>Name: <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h1>
-                {% endif %}
-
-                <div class="follow-data">
-                    <i class="fa-solid fa-user-group"></i>
-                    {% if followers %}
-                        <p><a href="{% url 'followers' pk=object.pk %}">{{ followers }} followers</a></p>
-                    {% else %}
-                        <p><a href="#">{{ followers }} followers</a></p>
-                    {% endif %}
-
-                    {% if following %}
-                        <p><a href="{% url 'following' pk=object.pk %}">{{ following_pets }} following</a></p>
-                    {% else %}
-                        <p><a href="#">{{ following_pets }} following</a></p>
-                    {% endif %}
+        <div class="profile-details">
+            {% if object.petimage_set.first %}
+                <div class="profile-img">
+                    <img src="{{ object.petimage_set.first.image.url }}" alt="profile picture">
                 </div>
-
-                {% if following %}
-                    <a href="{% url 'unfollow' pk=object.pk %}">Unfollow</a>
-                {% else %}
-                    {% if request.pet != object %}
-                        {% if following %}
-                            <a href="{% url 'follow' pk=object.pk %}">Follow</a>
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="profile-nav">
-            <a href="#">Publications</a>
-            <a href="#">Info</a>
-            <a href="#">Friends</a>
-            <a href="#">Photos</a>
-        </div>
-
-        <div class="details">
-            
-            <div class="description">
-                <p>{{ object.description }}</p>
-            </div>
+            {% else %}
+                <div class="no-profile-img"></div>
+            {% endif %}
         </div>
     </div>
-</div>
-<div id="form-pop-up">What's on your mind?</div>
-
-{% if publications %}
-    <div class="publication-container">
-        {% for publication in publications %}
-            <div class="publication-card">
-                {% if publication.image %}
-                    <img src="{{ publication.image.url }}" alt="publication image">
-                {% endif %}
-                <h3>{{ publication.title }}</h3>
-                <p>{{ publication.text }}</p>
-                <form action="{% url 'comment' %}" method="post">
-                    <input type="hidden" name="publication_id" value="{{ publication.pk }}">
-                    <input type="text" name="comment" id="comment">
-                    {% csrf_token %}
-                    <button>Comment</button>
-                </form>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
 {% endblock %}
 
 {% block extra_scripts %}
-    <script src="{% static 'js/publication.js' %}"></script>
 {% endblock %}

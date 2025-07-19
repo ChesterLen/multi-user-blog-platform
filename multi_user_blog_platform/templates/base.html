@@ -22,7 +22,12 @@
 
             {% if request.user.is_authenticated %}
                 <div class="login"><a href="{% url 'logout' %}">Logout</a></div>
-                <div class="profile-nav" ><a href="{% url 'profile_details' pk=request.user.pet.pk %}"><img id="profile-nav-img" src="{{ request.user.pet.petimage_set.first.image.url }}"></a></div>
+                <div class="profile-nav" >
+                    {% if request.pet.petimage_set.first %}
+                        <img id="profile-nav-img" src="{{ request.user.pet.petimage_set.first.image.url }}">
+                        <input type="hidden" value="{{ request.pet.pk }}" id="pet_pk">
+                    {% endif %}
+                </div>
             {% else %}
                 <div class="login"><a href="{% url 'login' %}">Login</a></div>
             {% endif %}
@@ -44,6 +49,7 @@
 
     <script src="https://kit.fontawesome.com/ce003ec2a1.js" crossorigin="anonymous"></script>
     <script src="{% url 'js_reverse' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 
     {% block extra_scripts %}
     {% endblock %}
