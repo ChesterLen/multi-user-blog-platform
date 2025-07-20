@@ -49,6 +49,21 @@
             <div>Privacy</div>
         </div>
     </footer>
+    <script>
+        // Save scroll position before leaving the page
+        window.addEventListener("beforeunload", function () {
+            localStorage.setItem("scrollY", window.scrollY);
+        });
+
+        // Restore scroll position after page load
+        window.addEventListener("load", function () {
+            const scrollY = localStorage.getItem("scrollY");
+            if (scrollY !== null) {
+                window.scrollTo(0, parseInt(scrollY));
+                localStorage.removeItem("scrollY");  // optional: clear it after restoring
+            }
+        });
+    </script>
 
     <script src="https://kit.fontawesome.com/ce003ec2a1.js" crossorigin="anonymous"></script>
     <script src="{% url 'js_reverse' %}"></script>

@@ -80,6 +80,13 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
         publications = models.Publication.objects.filter(pet=self.object)
         context['publications'] = publications
 
+        liked_publications = []
+
+        for like in models.Like.objects.all():
+            if like.liker == self.request.pet:
+                liked_publications.append(like.publication)
+
+        context['liked_publications'] = liked_publications
         return context
     
     def post(self, request, *args, **kwargs):
@@ -163,3 +170,38 @@ def unfollow(request, pk):
         return redirect(next_url)
 
     return redirect('profile_details', pk)
+
+
+def like(request, pk):
+    pub_pk = request.GET.get('pub_id')
+    publication = models.Publication.objects.get(pk=pub_pk)
+
+    pet =models.Publication.objects.get(pk=pk).pet
+
+    try:
+        like = models.Like.objects.filter(liker=request.pet)
+    except models.Like.DoesNotExist as error:
+        print(error)
+    
+    if not like:
+        like = models.Like.objects.create(publication=publication, liker=request.pet)
+        like.like = True
+        like.save()
+    
+    return redirect('profile_details', pet.pk)
+
+
+def unlike(request, pk):
+    pub_pk = request.GET.get('pub_id')
+    pet = models.Publication.objects.get(pk=pub_pk).pet
+
+    try:
+        like = models.Like.objects.get(liker=request.pet)
+        print(like)
+    except models.Like.DoesNotExist as error:
+        print(error)
+
+    if like:
+        like.delete()
+
+    return redirect('profile_details', pet.pk)

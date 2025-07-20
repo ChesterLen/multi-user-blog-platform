@@ -69,3 +69,10 @@ class Publication(models.Model):
     text = models.TextField(max_length=1500, null=False, blank=False)
 
     pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
+
+
+class Like(models.Model):
+    like = models.BooleanField(default=False)
+
+    publication = models.ForeignKey(to=Publication, on_delete=models.CASCADE)
+    liker = models.ForeignKey(to=Pet, on_delete=models.CASCADE)

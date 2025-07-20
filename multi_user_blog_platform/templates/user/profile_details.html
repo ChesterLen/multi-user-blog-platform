@@ -58,8 +58,32 @@
         <div class="publications">
             {% for publication in publications %}
                 <div class="publication-card">
+                    <div class="user">
+                        <div class="user-img">
+                            <img src="{{ object.petimage_set.first.image.url }}" alt="user image">
+                        </div>
+                        <p>{{ object.user.email }}</p>
+                    </div>
                     <h4>{{ publication.title }}</h4>
                     <p>{{ publication.text }}</p>
+                    <div class="engagement">
+                        <div class="stats"></div>
+                        <div class="actions">
+                            {% if request.pet.pk != object.pk %}
+                                {% if publication in liked_publications %}
+                                    <form action="{% url 'unlike' pk=publication.pk %}" method="get">
+                                        <input type="hidden" name="pub_id" value="{{ publication.pk }}">
+                                        <button><i class="fa-solid fa-heart"></i></button>
+                                    </form>
+                                {% else %}
+                                    <form action="{% url 'like' pk=publication.pk %}" method="get">
+                                        <input type="hidden" name="pub_id" value="{{ publication.pk }}">
+                                        <button><i class="far fa-heart"></i></button>
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
