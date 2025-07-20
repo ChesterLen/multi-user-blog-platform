@@ -50,12 +50,17 @@
         </div>
         <p>{{ object.description }}</p>
     </div>
-    <form method="post">
-        {{ form }}
-        {% csrf_token %}
-        <button>Publish</button>
-    </form>
+    <div class="form-pop-up">
+        <p>What's on your mind?</p>
+    </div>
+    
+    <div class="publication-form"></div>
 {% endblock %}
 
 {% block extra_scripts %}
+    <script>
+        let CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+
+    <script src="{% static 'js/publication.js' %}"></script>
 {% endblock %}

@@ -74,3 +74,13 @@
 #following {
     margin-left: 0.3em;
 }
+
+.form-pop-up {
+    color: #fff;
+    font-weight: 600;
+    background-color: #F68537;
+    padding: 0.5em;
+    border-radius: 10px;
+    margin-top: 0.5em;
+    cursor: pointer;
+}
