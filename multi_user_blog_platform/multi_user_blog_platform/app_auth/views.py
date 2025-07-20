@@ -77,6 +77,9 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
 
         context['form'] = forms.PublicationForm
 
+        publications = models.Publication.objects.filter(pet=self.object)
+        context['publications'] = publications
+
         return context
     
     def post(self, request, *args, **kwargs):

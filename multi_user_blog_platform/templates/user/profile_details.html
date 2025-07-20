@@ -22,9 +22,9 @@
             
             <div class="profile-data">
                 {% if object.name %}
-                    <h3>Name: {{ object.name }} <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h3>
+                    <h3>Name: {{ object.name }} <a href="{% url 'dog_or_cat' %}"><a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h3>
                 {% else %}
-                    <h3>Name: <i class="fa-solid fa-gear"></i></h3>
+                    <h3>Name: <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h3>
                 {% endif %}
 
                 {% if object.breed %}
@@ -53,8 +53,17 @@
     <div class="form-pop-up">
         <p>What's on your mind?</p>
     </div>
-    
-    <div class="publication-form"></div>
+
+    {% if publications %}
+        <div class="publications">
+            {% for publication in publications %}
+                <div class="publication-card">
+                    <h4>{{ publication.title }}</h4>
+                    <p>{{ publication.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block extra_scripts %}
