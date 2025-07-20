@@ -4,7 +4,7 @@ from multi_user_blog_platform.app_auth import forms, tasks, tokens, models
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import views as auth_views, get_user_model, logout, mixins
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.conf import settings
 
 
@@ -67,7 +67,6 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
         context = super().get_context_data(**kwargs)
 
         following = models.Follow.objects.filter(followed_pet=self.object.pk, follower_pet=self.request.user.pet.pk)
-        print(following)
         context['following'] = following
 
         followers = models.Follow.objects.filter(followed_pet=self.object.pk)
@@ -76,7 +75,22 @@ class ProfileDetails(mixins.LoginRequiredMixin, views.DetailView):
         following_pets = models.Follow.objects.filter(follower_pet=self.object.pk)
         context['following_pets'] = len(following_pets)
 
+        context['form'] = forms.PublicationForm
+
         return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = forms.PublicationForm(request.POST)
+
+        if form.is_valid():
+            publication = form.save(commit=False)
+            publication.pet = self.object
+            publication.save()
+            return redirect('profile_details', self.object.pk)
+        
+        return render(request, self.template_name)
+
 
 
 class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):

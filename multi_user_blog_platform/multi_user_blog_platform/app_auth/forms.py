@@ -22,3 +22,9 @@ class PetUpdateForm(forms.ModelForm):
     class Meta:
         model = models.Pet
         fields = ['name', 'description', 'age', 'breed']
+
+
+class PublicationForm(forms.ModelForm):
+    class Meta:
+        model = models.Publication
+        fields = ['title', 'text']

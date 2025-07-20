@@ -62,3 +62,10 @@ class PetImage(models.Model):
 class Follow(models.Model):
     followed_pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='followed_pet')
     follower_pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='follower_pet')
+
+
+class Publication(models.Model):
+    title = models.CharField(max_length=300, null=False, blank=False)
+    text = models.TextField(max_length=1500, null=False, blank=False)
+
+    pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
