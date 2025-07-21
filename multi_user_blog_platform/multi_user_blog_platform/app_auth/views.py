@@ -206,3 +206,16 @@ def unlike(request, pk):
         like.delete()
 
     return redirect('profile_details', pet.pk)
+
+
+def comment(request, pk):
+    comment = request.POST.get('comment')
+    publication = models.Publication.objects.get(pk=pk)
+    form = forms.CommentForm
+
+    if form.is_valid:
+        models.Comment.objects.create(comment=comment, publication=publication, pet=request.pet)
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

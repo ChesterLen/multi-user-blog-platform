@@ -199,6 +199,34 @@
     gap: 3em;
 }
 
+.form-btns {
+    display: flex;
+    gap: 0.5em;
+    margin-top: 0.5em;
+}
+
+.form-btns button {
+    font-family: "Montserrat", sans-serif;
+    color: #fff;
+    background-color: #f8781c;
+    border: none;
+    font-size: 13px;
+    padding: 0 0.2em;
+    padding-top: 0.1em;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.cancel {
+    color: #fff;
+    background-color: #F68537;
+    font-size: 13px;
+    padding: 0 0.2em;
+    padding-top: 0.1em;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
 .fa-comment {
     color: #F68537;
 }
@@ -212,4 +240,9 @@
 
 .actions .fa-heart {
     color: red;
+}
+
+.comments {
+    margin-top: 0.5em;
+    border-top: 1px #000 solid;
 }

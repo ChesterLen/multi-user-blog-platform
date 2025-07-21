@@ -28,3 +28,9 @@ class PublicationForm(forms.ModelForm):
     class Meta:
         model = models.Publication
         fields = ['title', 'text']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = models.Comment
+        fields = ['comment']

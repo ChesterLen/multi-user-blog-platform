@@ -98,6 +98,15 @@
                                 {% endif %}
                             {% endif %}
                         </div>
+                        {% if publication.comment_set.exists %}
+                            <ul class="comments">
+                                {% for comment in publication.comment_set.all %}
+                                    <li>
+                                        <p>{{ comment.comment }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                     
                 </div>

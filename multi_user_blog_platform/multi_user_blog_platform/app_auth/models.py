@@ -76,3 +76,10 @@ class Like(models.Model):
 
     publication = models.ForeignKey(to=Publication, on_delete=models.CASCADE)
     liker = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+    comment = models.TextField(max_length=1500, null=False, blank=False)
+
+    publication = models.ForeignKey(to=Publication, on_delete=models.CASCADE)
+    pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)

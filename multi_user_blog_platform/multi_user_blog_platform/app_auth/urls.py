@@ -16,5 +16,6 @@ urlpatterns = [
         path('following/<int:pk>/', views.Followers.as_view(), name='following'),
         path('like/<int:pk>/', views.like, name='like'),
         path('unlike/<int:pk>/', views.unlike, name='unlike'),
+        path('comment/<int:pk>/', views.comment, name='comment'),
     ]))
 ]

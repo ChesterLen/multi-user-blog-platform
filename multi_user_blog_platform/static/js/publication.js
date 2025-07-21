@@ -99,14 +99,44 @@ if (formPopUp) {
 for (const engagement of engagements) {
     const btn = engagement.children[1].children[1];
     btn.addEventListener('click', () => {
+        const pubPK = engagement.children[1].children[0].children[0].value;
+
         const commentForm = document.createElement('form');
+        commentForm.className = 'comment';
+        const commentFormAction = Urls.comment(pk=pubPK);
+        commentForm.action = commentFormAction;
+        commentForm.method = 'post';
+
         const input = document.createElement('textarea');
+        input.id = 'comment';
+        input.name = 'comment';
+
+        const divFormBtns = document.createElement('div');
+        divFormBtns.className = 'form-btns';
+
         const commentBtn = document.createElement('button');
         commentBtn.textContent = 'Comment';
 
+        const cancelBtn = document.createElement('div');
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.className = 'cancel';
+        cancelBtn.addEventListener('click', () => {
+            engagement.removeChild(commentForm);
+        });
+
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = 'csrfmiddlewaretoken';
+        csrfToken.value = CSRF_TOKEN;
+
+        divFormBtns.appendChild(commentBtn);
+        divFormBtns.appendChild(cancelBtn);
+
         commentForm.appendChild(input);
-        commentForm.appendChild(commentBtn);
+        commentForm.appendChild(csrfToken);
+        commentForm.appendChild(divFormBtns);
 
         engagement.appendChild(commentForm);
+        console.log(engagement.children[2]);
     });
 };
