@@ -50,40 +50,56 @@
         </div>
         <p>{{ object.description }}</p>
     </div>
-    <div class="form-pop-up">
-        <p>What's on your mind?</p>
-    </div>
+    {% if request.pet == object.user.pet %}
+        <div class="form-pop-up">
+            <p>What's on your mind?</p>
+        </div>
+    {% endif %}
 
     {% if publications %}
         <div class="publications">
             {% for publication in publications %}
                 <div class="publication-card">
+
                     <div class="user">
                         <div class="user-img">
                             <img src="{{ object.petimage_set.first.image.url }}" alt="user image">
                         </div>
                         <p>{{ object.user.email }}</p>
                     </div>
-                    <h4>{{ publication.title }}</h4>
-                    <p>{{ publication.text }}</p>
+                    
+                    <div class="content">
+                        <h4>{{ publication.title }}</h4>
+                        <p>{{ publication.text }}</p>
+                    </div>
+
                     <div class="engagement">
-                        <div class="stats"></div>
+
+                        <div class="stats">
+                            <!-- <i class="fa fa-heart"></i> -->
+                        </div>
+
                         <div class="actions">
                             {% if request.pet.pk != object.pk %}
                                 {% if publication in liked_publications %}
-                                    <form action="{% url 'unlike' pk=publication.pk %}" method="get">
+                                    <form class="like" action="{% url 'unlike' pk=publication.pk %}" method="get">
                                         <input type="hidden" name="pub_id" value="{{ publication.pk }}">
-                                        <button><i class="fa-solid fa-heart"></i></button>
+                                        <button><i class="fa-solid fa-heart"></i> Unlike</button>
                                     </form>
+
+                                    <button class="comment-btn"><i class="fa-solid fa-comment"></i> comment</button>
                                 {% else %}
-                                    <form action="{% url 'like' pk=publication.pk %}" method="get">
+                                    <form class="like" action="{% url 'like' pk=publication.pk %}" method="get">
                                         <input type="hidden" name="pub_id" value="{{ publication.pk }}">
-                                        <button><i class="far fa-heart"></i></button>
+                                        <button><i class="far fa-heart"></i> Like</button>
                                     </form>
+
+                                    <button class="comment-btn"><i class="fa-solid fa-comment"></i> comment</button>
                                 {% endif %}
                             {% endif %}
                         </div>
                     </div>
+                    
                 </div>
             {% endfor %}
         </div>

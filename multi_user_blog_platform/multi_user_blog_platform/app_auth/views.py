@@ -176,10 +176,11 @@ def like(request, pk):
     pub_pk = request.GET.get('pub_id')
     publication = models.Publication.objects.get(pk=pub_pk)
 
-    pet =models.Publication.objects.get(pk=pk).pet
+    pet = models.Publication.objects.get(pk=pk).pet
 
     try:
-        like = models.Like.objects.filter(liker=request.pet)
+        like = models.Like.objects.filter(publication=publication, liker=request.pet)
+        print(like)
     except models.Like.DoesNotExist as error:
         print(error)
     
@@ -193,11 +194,11 @@ def like(request, pk):
 
 def unlike(request, pk):
     pub_pk = request.GET.get('pub_id')
+    publication = models.Publication.objects.get(pk=pk)
     pet = models.Publication.objects.get(pk=pub_pk).pet
 
     try:
-        like = models.Like.objects.get(liker=request.pet)
-        print(like)
+        like = models.Like.objects.filter(publication=publication, liker=request.pet)
     except models.Like.DoesNotExist as error:
         print(error)
 

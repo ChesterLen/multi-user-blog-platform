@@ -75,7 +75,7 @@
     margin-left: 0.3em;
 }
 
-/* Pop up */
+/* Pop up start */
 
 .form-pop-up {
     color: #fff;
@@ -122,14 +122,16 @@
     padding: 0.3em 0.5em;
 }
 
+/* Pop up end */
+
 .publications {
     margin: 0.5em 0;
     width: 70%;
 }
 
 .publication-card {
-    background-color: #F68537;
-    margin-top: 0.5em;
+    background-color: #eee;
+    margin-top: 2em;
     width: 100%;
     height: auto;
     display: flex;
@@ -144,7 +146,7 @@
     display: flex;
     align-items: center;
     gap: 0.5em;
-    background-color: #ddd;
+    background-color: #F68537;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
 }
@@ -163,15 +165,49 @@
     border-radius: 50%;
 }
 
+.content {
+    margin: 1em 0;
+    font-size: 25px;
+}
+
 .engagement {
     width: 100%;
-    height: 50px;
-    background-color: #ddd;
+    height: auto;
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-bottom: 1em;
+}
+
+.engagement > form {
+    width: 90%;
+    margin: 1em auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.engagement > form input {
+    width: 70%;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+}
+
+.fa-comment {
+    color: #F68537;
 }
 
 .actions button {
     background: none;
     border: none;
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .actions .fa-heart {
