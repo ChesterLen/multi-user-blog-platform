@@ -62,10 +62,14 @@
                 <div class="publication-card">
 
                     <div class="user">
-                        <div class="user-img">
-                            <img src="{{ object.petimage_set.first.image.url }}" alt="user image">
-                        </div>
-                        <p>{{ object.user.email }}</p>
+                        {% if object.petimage_set.exists %}
+                            <div class="user-img">
+                                <img src="{{ object.petimage_set.first.image.url }}" alt="user image">
+                            </div>
+                        {% else %}
+                            <div class="user-img"></div>
+                        {% endif %}
+                        <p>{{ object.name }}</p>
                     </div>
                     
                     <div class="content">
@@ -80,29 +84,40 @@
                         </div>
 
                         <div class="actions">
-                            {% if request.pet.pk != object.pk %}
-                                {% if publication in liked_publications %}
-                                    <form class="like" action="{% url 'unlike' pk=publication.pk %}" method="get">
-                                        <input type="hidden" name="pub_id" value="{{ publication.pk }}">
-                                        <button><i class="fa-solid fa-heart"></i> Unlike</button>
-                                    </form>
+                            {% if publication in liked_publications %}
+                                <form class="like" action="{% url 'unlike' pk=publication.pk %}" method="get">
+                                    <input type="hidden" name="pub_id" value="{{ publication.pk }}">
+                                    <button><i class="fa-solid fa-heart"></i> Unlike</button>
+                                </form>
 
-                                    <button class="comment-btn"><i class="fa-solid fa-comment"></i> comment</button>
-                                {% else %}
-                                    <form class="like" action="{% url 'like' pk=publication.pk %}" method="get">
-                                        <input type="hidden" name="pub_id" value="{{ publication.pk }}">
-                                        <button><i class="far fa-heart"></i> Like</button>
-                                    </form>
+                                <button class="comment-btn"><i class="fa-solid fa-comment"></i> comment</button>
+                            {% else %}
+                                <form class="like" action="{% url 'like' pk=publication.pk %}" method="get">
+                                    <input type="hidden" name="pub_id" value="{{ publication.pk }}">
+                                    <button><i class="far fa-heart"></i> Like</button>
+                                </form>
 
-                                    <button class="comment-btn"><i class="fa-solid fa-comment"></i> comment</button>
-                                {% endif %}
+                                <button class="comment-btn"><i class="fa-solid fa-comment"></i> comment</button>
                             {% endif %}
                         </div>
                         {% if publication.comment_set.exists %}
                             <ul class="comments">
                                 {% for comment in publication.comment_set.all %}
                                     <li>
-                                        <p>{{ comment.comment }}</p>
+                                        <div class="comment-user">
+                                            {% if comment.pet.petimage_set.first.image.url %}
+                                                <div class="comment-user-img">
+                                                    <img src="{{ comment.pet.petimage_set.first.image.url }}" alt="user image">
+                                                </div>
+                                            {% else %}
+                                                <div class="comment-user-img"></div>
+                                            {% endif %}
+                                            <p><a href="{% url 'profile_details' pk=comment.pet.pk %}">{{ comment.pet.name }}</p></a>
+                                        </div>
+                                        <div class="comment-p">
+                                            <p>{{ comment.comment }}</p>
+                                            <button>Reply</button>
+                                        </div>
                                     </li>
                                 {% endfor %}
                             </ul>

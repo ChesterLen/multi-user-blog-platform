@@ -125,7 +125,7 @@
 /* Pop up end */
 
 .publications {
-    margin: 0.5em 0;
+    margin: 1em 0;
     width: 70%;
 }
 
@@ -152,9 +152,9 @@
 }
 
 .user-img {
-    width: 30px;
-    height: 30px;
-    border: 3px #F68537 solid;
+    width: 40px;
+    height: 40px;
+    border: 3px #fff solid;
     border-radius: 50%;
     margin-left: 0.5em;
 }
@@ -178,7 +178,6 @@
     flex-direction: column;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    margin-bottom: 1em;
 }
 
 .engagement > form {
@@ -197,6 +196,7 @@
     display: flex;
     justify-content: center;
     gap: 3em;
+    margin-bottom: 0.5em;
 }
 
 .form-btns {
@@ -243,6 +243,52 @@
 }
 
 .comments {
+    margin: 1em auto;
+    list-style: none;
+    width: 97%;
+}
+
+.comments li {
     margin-top: 0.5em;
-    border-top: 1px #000 solid;
+}
+
+.comment-user {
+    background-color: #ef985a;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.1em 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.comment-user a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.comment-user-img {
+    width: 25px;
+    height: 25px;
+    border: 3px #fff solid;
+    border-radius: 50%;
+    margin-left: 0.5em;
+}
+
+.comment-p {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    background-color: #ddd;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.comment-p p {
+    width: 90ch;
+    word-wrap: break-word;
 }
