@@ -154,9 +154,14 @@ if (comments && replyBtns) {
         comment.appendChild(replyDiv)
 
         replyBtn.addEventListener('click', () => {
+            const comPK = comment.querySelector('#com_pk').value;
+            const replyFormAction = Urls.reply(pk=comPK);
+
             replyDiv.removeChild(replyBtn);
             const replyForm = document.createElement('form');
             replyForm.className = 'reply-form';
+            replyForm.action = replyFormAction;
+            replyForm.method = 'post';
 
             const reply = document.createElement('input');
             reply.type = 'text';
@@ -185,7 +190,6 @@ if (comments && replyBtns) {
 
             replyDiv.appendChild(replyForm);
             replyDiv.appendChild(cancelPostBtn);
-            // comment.appendChild(replyDiv)
         });
     };
 };
