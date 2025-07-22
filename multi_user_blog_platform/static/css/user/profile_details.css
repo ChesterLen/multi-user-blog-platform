@@ -299,6 +299,13 @@
     word-wrap: break-word;
 }
 
+.reply {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
 .replies {
     margin-left: 1em;
 }
@@ -346,4 +353,21 @@
     background-color: #ddd;
     padding: 0.3em 0.5em;
     border-radius: 10px;
+}
+
+.reply-div {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.reply-div input {
+    margin-right: 0.2em;
+}
+
+.post-btn, .cancel-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
 }

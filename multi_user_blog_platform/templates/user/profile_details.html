@@ -117,7 +117,7 @@
                                         <div class="comment-p">
                                             <p>{{ comment.comment }}</p>
                                             <input type="hidden" name="com_pk" id="com_pk" value="{{ comment.pk }}">
-                                            <button class="reply">Reply</button>
+                                            <button class="reply"><i class="fa-solid fa-reply"></i> Reply</button>
                                         </div>
                                         <div class="replies">
                                             {% if comment.reply_set.all %}

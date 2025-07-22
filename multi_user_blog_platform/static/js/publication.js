@@ -167,12 +167,21 @@ if (comments && replyBtns) {
             reply.type = 'text';
             reply.name = 'reply';
             reply.id = 'reply';
+            reply.required = true;
             
             const postBtn = document.createElement('button');
-            postBtn.textContent = 'Post';
+            postBtn.className = 'post-btn';
+            const postBtnI = document.createElement('i');
+            postBtnI.className = 'fa-solid fa-comment';
+            postBtn.appendChild(postBtnI);
+            postBtn.innerHTML += ' Reply';
 
             const cancelPostBtn = document.createElement('button');
-            cancelPostBtn.textContent = 'Cancel';
+            const cancelPostI = document.createElement('i');
+            cancelPostI.className = 'fa-solid fa-times';
+            cancelPostBtn.appendChild(cancelPostI);
+            cancelPostBtn.innerHTML += ' Cancel';
+            cancelPostBtn.className = 'cancel-btn';
             cancelPostBtn.addEventListener('click', () => {
                 replyDiv.removeChild(replyForm);
                 replyDiv.removeChild(cancelPostBtn);
