@@ -1,7 +1,7 @@
 const formPopUp = document.getElementsByClassName('form-pop-up')[0];
+
 const engagements = document.getElementsByClassName('engagement');
 const commentPopUpBtns = document.getElementsByClassName('comment-btn');
-
 
 if (formPopUp) {
     formPopUp.addEventListener('click', () => {
@@ -137,6 +137,24 @@ for (const engagement of engagements) {
         commentForm.appendChild(divFormBtns);
 
         engagement.appendChild(commentForm);
-        console.log(engagement.children[2]);
     });
+};
+
+const replyBtns = document.querySelectorAll('.reply');
+const comments = document.querySelectorAll('.comment-p');
+
+if (comments && replyBtns) {
+    for (const comment of comments) {
+        const replyDiv = document.createElement('div');
+        replyDiv.className = 'reply-div';
+
+        const replyBtn = comment.querySelector('.reply');
+        replyDiv.appendChild(comment.removeChild(replyBtn));
+        replyBtn.addEventListener('click', () => {
+            const reply = document.createElement('input');
+            replyDiv.appendChild(reply);
+        });
+
+        comment.appendChild(replyDiv)
+    };
 };
