@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.hashers import make_password
-from datetime import datetime
 
 
 class AppUserManager(auth_models.BaseUserManager):

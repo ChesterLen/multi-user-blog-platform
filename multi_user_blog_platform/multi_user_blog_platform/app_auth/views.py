@@ -180,14 +180,11 @@ def like(request, pk):
 
     try:
         like = models.Like.objects.filter(publication=publication, liker=request.pet)
-        print(like)
     except models.Like.DoesNotExist as error:
         print(error)
     
     if not like:
         like = models.Like.objects.create(publication=publication, liker=request.pet)
-        like.like = True
-        like.save()
     
     return redirect('profile_details', pet.pk)
 
