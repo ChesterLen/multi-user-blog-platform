@@ -149,12 +149,43 @@ if (comments && replyBtns) {
         replyDiv.className = 'reply-div';
 
         const replyBtn = comment.querySelector('.reply');
-        replyDiv.appendChild(comment.removeChild(replyBtn));
-        replyBtn.addEventListener('click', () => {
-            const reply = document.createElement('input');
-            replyDiv.appendChild(reply);
-        });
 
+        replyDiv.appendChild(comment.removeChild(replyBtn));
         comment.appendChild(replyDiv)
+
+        replyBtn.addEventListener('click', () => {
+            replyDiv.removeChild(replyBtn);
+            const replyForm = document.createElement('form');
+            replyForm.className = 'reply-form';
+
+            const reply = document.createElement('input');
+            reply.type = 'text';
+            reply.name = 'reply';
+            reply.id = 'reply';
+            
+            const postBtn = document.createElement('button');
+            postBtn.textContent = 'Post';
+
+            const cancelPostBtn = document.createElement('button');
+            cancelPostBtn.textContent = 'Cancel';
+            cancelPostBtn.addEventListener('click', () => {
+                replyDiv.removeChild(replyForm);
+                replyDiv.removeChild(cancelPostBtn);
+                replyDiv.appendChild(replyBtn);
+            });
+
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = 'csrfmiddlewaretoken';
+            csrfToken.value = CSRF_TOKEN;
+
+            replyForm.appendChild(reply);
+            replyForm.appendChild(csrfToken);
+            replyForm.appendChild(postBtn);
+
+            replyDiv.appendChild(replyForm);
+            replyDiv.appendChild(cancelPostBtn);
+            // comment.appendChild(replyDiv)
+        });
     };
 };
