@@ -103,7 +103,7 @@
                         {% if publication.comment_set.exists %}
                             <ul class="comments">
                                 {% for comment in publication.comment_set.all %}
-                                    <li>
+                                    <li class="comment-li">
                                         <div class="comment-user">
                                             {% if comment.pet.petimage_set.first.image.url %}
                                                 <div class="comment-user-img">
@@ -118,6 +118,33 @@
                                             <p>{{ comment.comment }}</p>
                                             <input type="hidden" name="com_pk" id="com_pk" value="{{ comment.pk }}">
                                             <button class="reply">Reply</button>
+                                        </div>
+                                        <div class="replies">
+                                            {% if comment.reply_set.all %}
+                                                <ul>
+                                                    {% for reply in comment.reply_set.all %}
+                                                        <li>
+                                                            <div class="reply-container">
+                                                                <div class="reply-user-data">
+                                                                    {% if reply.pet.petimage_set.first.image.url %}
+                                                                        <div class="reply-user-img">
+                                                                            <img src="{{ reply.pet.petimage_set.first.image.url }}" alt="user image">
+                                                                        </div>
+                                                                    {% else %}
+                                                                        <div class="reply-user-img"></div>
+                                                                    {% endif %}
+                                                                    <p><a href="{% url 'profile_details' pk=reply.pet.pk %}">{{ comment.pet.name }}</p></a>
+                                                                </div>
+                                                                <div class="reply-p">
+                                                                    <p>{{ reply.reply }}</p>
+                                                                    <input type="hidden" name="rep_pk" id="rep_pk" value="{{ reply.pk }}">
+                                                                    <!-- <button class="reply">Reply</button> -->
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
                                         </div>
                                     </li>
                                 {% endfor %}
