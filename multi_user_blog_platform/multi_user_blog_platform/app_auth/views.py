@@ -206,26 +206,14 @@ def unlike(request, pk):
 
 
 def comment(request, pk):
-    comment_reply = None
-
     comment = request.POST.get('comment')
-    reply = request.POST.get('reply')
-
-    if comment is not None:
-        comment_reply = comment
-    elif reply is not None:
-        comment_reply = reply
-
-
     publication = models.Publication.objects.get(pk=pk)
-
-    from_pet = request.pet
-    to_pet = publication.pet
+    pet = request.pet
 
     form = forms.CommentForm
 
     if form.is_valid:
-        models.Comment.objects.create(comment=comment_reply, publication=publication, from_pet=from_pet, to_pet=to_pet)
+        models.Comment.objects.create(comment=comment, publication=publication, pet=pet)
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 

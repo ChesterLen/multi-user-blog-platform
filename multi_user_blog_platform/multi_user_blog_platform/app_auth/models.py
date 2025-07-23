@@ -82,3 +82,9 @@ class Comment(models.Model):
 
     publication = models.ForeignKey(to=Publication, on_delete=models.CASCADE)
     pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
+
+
+class Reply(models.Model):
+    publication = models.ForeignKey(to=Publication, on_delete=models.CASCADE)
+    from_pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='from_pet')
+    to_pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE, related_name='to_pet')
