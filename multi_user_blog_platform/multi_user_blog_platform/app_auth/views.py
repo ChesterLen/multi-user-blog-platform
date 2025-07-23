@@ -228,3 +228,17 @@ def reply(request, pk):
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def reply_reply(request, pk):
+    reply = models.Reply.objects.get(pk=pk)
+    reply_reply = request.POST.get('reply_reply')
+    pet = request.pet
+    
+    form = forms.ReplyReplyForm
+
+    if form.is_valid:
+        models.ReplyReply.objects.create(reply_reply=reply_reply, pet=pet, reply=reply)
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referere_not_found'))
+
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referere_not_found'))

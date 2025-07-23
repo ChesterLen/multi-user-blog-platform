@@ -202,3 +202,44 @@ if (comments && replyBtns) {
         });
     };
 };
+
+const replyReplyBtns = document.getElementsByClassName('reply-reply');
+
+if (replyReplyBtns) {
+    for (const replyBtn of replyReplyBtns) {
+        replyBtn.addEventListener('click', () => {
+            const container = replyBtn.parentNode.parentNode.parentNode;
+            const repPK = container.querySelector('#rep_pk').value;
+
+            const replyReplyForm = document.createElement('form');
+            replyReplyForm.className = 'reply-reply-form';
+            const replyReplyFormAction = Urls.reply_reply(pk=repPK);
+            replyReplyForm.action = replyReplyFormAction
+            replyReplyForm.method = 'post';
+
+            const replyReplyInput = document.createElement('input');
+            replyReplyInput.name = 'reply_reply';
+            replyReplyInput.id = 'reply_reply';
+
+            const replyReplyCsrfToken = document.createElement('input');
+            replyReplyCsrfToken.type = 'hidden';
+            replyReplyCsrfToken.name = 'csrfmiddlewaretoken';
+            replyReplyCsrfToken.value = CSRF_TOKEN;
+
+            const replyReplyBtn = document.createElement('button');
+            replyReplyBtn.className = 'reply-reply-form-btn';
+            const replyReplyI = document.createElement('i');
+            replyReplyI.className = 'fa-solid fa-reply';
+            replyReplyBtn.appendChild(replyReplyI);
+            replyReplyBtn.innerHTML += ' Reply';
+
+            replyReplyForm.appendChild(replyReplyInput);
+            replyReplyForm.appendChild(replyReplyCsrfToken);
+            replyReplyForm.appendChild(replyReplyBtn);
+
+            if (!container.querySelector('.reply-reply-form')) {
+                container.appendChild(replyReplyForm);
+            };
+        });
+    };
+};

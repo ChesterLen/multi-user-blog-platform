@@ -138,9 +138,29 @@
                                                                 <div class="reply-p">
                                                                     <p>{{ reply.reply }}</p>
                                                                     <input type="hidden" name="rep_pk" id="rep_pk" value="{{ reply.pk }}">
-                                                                    <!-- <button class="reply">Reply</button> -->
+                                                                    <button class="reply-reply"><i class="fa-solid fa-reply"></i> Reply</button>
                                                                 </div>
                                                             </div>
+                                                            {% if reply.replyreply_set.all %}
+                                                                <ul>
+                                                                    {% for reply_reply in reply.replyreply_set.all %}
+                                                                        <li>
+                                                                            <div class="reply-reply-container">
+                                                                                <div class="reply-reply-user-data">
+                                                                                    {% if reply_reply.pet.petimage_set.first.image.url %}
+                                                                                        <div class="reply-reply-user-img">
+                                                                                            <img src="{{ reply_reply.pet.petimage_set.first.image.url }}" alt="user image">
+                                                                                        </div>
+                                                                                    {% else %}
+                                                                                        <div class="reply-reply-user-img"></div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <p>{{ reply_reply.reply_reply }}</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            {% endif %}
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
