@@ -134,12 +134,14 @@
                                                                         <div class="reply-user-img"></div>
                                                                     {% endif %}
                                                                     <p><a href="{% url 'profile_details' pk=reply.pet.pk %}">{{ comment.pet.name }}</p></a>
+
+                                                                    <div class="reply-p">
+                                                                        <p>{{ reply.reply }}</p>
+                                                                        <input type="hidden" name="rep_pk" id="rep_pk" value="{{ reply.pk }}">
+                                                                        <button class="reply-reply"><i class="fa-solid fa-reply"></i> Reply</button>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="reply-p">
-                                                                    <p>{{ reply.reply }}</p>
-                                                                    <input type="hidden" name="rep_pk" id="rep_pk" value="{{ reply.pk }}">
-                                                                    <button class="reply-reply"><i class="fa-solid fa-reply"></i> Reply</button>
-                                                                </div>
+
                                                             </div>
                                                             {% if reply.replyreply_set.all %}
                                                                 <ul>
@@ -154,6 +156,7 @@
                                                                                     {% else %}
                                                                                         <div class="reply-reply-user-img"></div>
                                                                                     {% endif %}
+                                                                                    <p><a href="{% url 'profile_details' pk=reply_reply.pet.pk %}">{{ reply_reply.pet.name }}</p></a>
                                                                                 </div>
                                                                                 <p>{{ reply_reply.reply_reply }}</p>
                                                                             </div>

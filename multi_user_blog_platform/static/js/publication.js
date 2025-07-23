@@ -208,7 +208,8 @@ const replyReplyBtns = document.getElementsByClassName('reply-reply');
 if (replyReplyBtns) {
     for (const replyBtn of replyReplyBtns) {
         replyBtn.addEventListener('click', () => {
-            const container = replyBtn.parentNode.parentNode.parentNode;
+            const container = replyBtn.parentNode.parentNode.parentNode.parentNode.querySelector('.reply-container');
+            console.log(container);
             const repPK = container.querySelector('#rep_pk').value;
 
             const replyReplyForm = document.createElement('form');
