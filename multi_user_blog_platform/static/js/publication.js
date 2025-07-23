@@ -97,9 +97,9 @@ if (formPopUp) {
 };
 
 for (const engagement of engagements) {
-    const btn = engagement.children[1].children[1];
+    const btn = engagement.children[0].children[1].children[1];
     btn.addEventListener('click', () => {
-        const pubPK = engagement.children[1].children[0].children[0].value;
+        const pubPK = engagement.children[0].children[1].children[0].children[0].value;
 
         const commentForm = document.createElement('form');
         commentForm.className = 'comment';
@@ -110,6 +110,7 @@ for (const engagement of engagements) {
         const input = document.createElement('textarea');
         input.id = 'comment';
         input.name = 'comment';
+        input.required = true;
 
         const divFormBtns = document.createElement('div');
         divFormBtns.className = 'form-btns';
@@ -121,7 +122,7 @@ for (const engagement of engagements) {
         cancelBtn.textContent = 'Cancel';
         cancelBtn.className = 'cancel';
         cancelBtn.addEventListener('click', () => {
-            engagement.removeChild(commentForm);
+            engagementDiv.removeChild(commentForm);
         });
 
         const csrfToken = document.createElement('input');
@@ -136,175 +137,53 @@ for (const engagement of engagements) {
         commentForm.appendChild(csrfToken);
         commentForm.appendChild(divFormBtns);
 
-        engagement.appendChild(commentForm);
+        const engagementDiv = engagement.querySelector('.engagement-div');
+        if (!engagementDiv.querySelector('.comment')) {
+            engagementDiv.appendChild(commentForm);
+        };
     });
 };
 
-const replyBtns = document.querySelectorAll('.reply');
-const comments = document.querySelectorAll('.comment-p');
+const comments = document.querySelector('.comments');
 
-if (comments && replyBtns) {
-    for (const comment of comments) {
-        const replyDiv = document.createElement('div');
-        replyDiv.className = 'reply-div';
+const commentsLi = comments.querySelectorAll('.comment-li');
 
-        const replyBtn = comment.querySelector('.reply');
+for (const commentLi of commentsLi) {
+    const replyBtn = document.createElement('button');
+    replyBtn.className = 'reply-btn';
+    const replyBtnI = document.createElement('i');
+    replyBtnI.className = 'fa-solid fa-reply';
+    replyBtn.appendChild(replyBtnI);
+    replyBtn.innerHTML += ' Reply';
 
-        replyDiv.appendChild(comment.removeChild(replyBtn));
-        comment.appendChild(replyDiv)
+    const commentP = commentLi.querySelector('.comment-p');
+    commentP.appendChild(replyBtn);
 
-        replyBtn.addEventListener('click', () => {
-            const comPK = comment.querySelector('#com_pk').value;
-            const replyFormAction = Urls.reply(pk=comPK);
-
-            replyDiv.removeChild(replyBtn);
-            const replyForm = document.createElement('form');
-            replyForm.className = 'reply-form';
-            replyForm.action = replyFormAction;
-            replyForm.method = 'post';
-
-            const reply = document.createElement('input');
-            reply.type = 'text';
-            reply.name = 'reply';
-            reply.id = 'reply';
-            reply.required = true;
-            
-            const postBtn = document.createElement('button');
-            postBtn.className = 'post-btn';
-            const postBtnI = document.createElement('i');
-            postBtnI.className = 'fa-solid fa-comment';
-            postBtn.appendChild(postBtnI);
-            postBtn.innerHTML += ' Reply';
-
-            const cancelPostBtn = document.createElement('button');
-            const cancelPostI = document.createElement('i');
-            cancelPostI.className = 'fa-solid fa-times';
-            cancelPostBtn.appendChild(cancelPostI);
-            cancelPostBtn.innerHTML += ' Cancel';
-            cancelPostBtn.className = 'cancel-btn';
-            cancelPostBtn.addEventListener('click', () => {
-                replyDiv.removeChild(replyForm);
-                replyDiv.removeChild(cancelPostBtn);
-                replyDiv.appendChild(replyBtn);
-            });
-
-            const csrfToken = document.createElement('input');
-            csrfToken.type = 'hidden';
-            csrfToken.name = 'csrfmiddlewaretoken';
-            csrfToken.value = CSRF_TOKEN;
-
-            replyForm.appendChild(reply);
-            replyForm.appendChild(csrfToken);
-            replyForm.appendChild(postBtn);
-
-            replyDiv.appendChild(replyForm);
-            replyDiv.appendChild(cancelPostBtn);
-        });
-    };
-};
-
-const replyReplyBtns = document.getElementsByClassName('reply-reply');
-
-if (replyReplyBtns) {
-    for (const replyBtn of replyReplyBtns) {
-        replyBtn.addEventListener('click', () => {
-            const container = replyBtn.parentNode.parentNode.parentNode.parentNode.querySelector('.reply-user-data');
-            const repPK = container.querySelector('#rep_pk').value;
-
-            const replyReplyForm = document.createElement('form');
-            replyReplyForm.className = 'reply-reply-form';
-            const replyReplyFormAction = Urls.reply_reply(pk=repPK);
-            replyReplyForm.action = replyReplyFormAction
-            replyReplyForm.method = 'post';
-
-            const replyReplyInput = document.createElement('input');
-            replyReplyInput.name = 'reply_reply';
-            replyReplyInput.id = 'reply_reply';
-            replyReplyInput.required = true;
-
-            const replyReplyCsrfToken = document.createElement('input');
-            replyReplyCsrfToken.type = 'hidden';
-            replyReplyCsrfToken.name = 'csrfmiddlewaretoken';
-            replyReplyCsrfToken.value = CSRF_TOKEN;
-
-            const replyReplyBtn = document.createElement('button');
-            replyReplyBtn.className = 'reply-reply-form-btn';
-            const replyReplyI = document.createElement('i');
-            replyReplyI.className = 'fa-solid fa-reply';
-            replyReplyBtn.appendChild(replyReplyI);
-            replyReplyBtn.innerHTML += ' Reply';
-
-            const replyReplyCancelBtn = document.createElement('button');
-            replyReplyCancelBtn.className = 'reply-reply-cancel-btn';
-            const replyReplyCancelI = document.createElement('i');
-            replyReplyCancelI.className = 'fa-solid fa-times';
-            replyReplyCancelBtn.appendChild(replyReplyCancelI);
-            replyReplyCancelBtn.innerHTML += ' Cancel';
-            replyReplyCancelBtn.addEventListener('click', () => {
-                container.removeChild(replyReplyDiv);
-            });
-
-            replyReplyForm.appendChild(replyReplyInput);
-            replyReplyForm.appendChild(replyReplyCsrfToken);
-            replyReplyForm.appendChild(replyReplyBtn);
-
-            const replyReplyDiv = document.createElement('div');
-            replyReplyDiv.className = 'reply-reply-div';
-
-            replyReplyDiv.appendChild(replyReplyForm);
-            replyReplyDiv.appendChild(replyReplyCancelBtn);
-
-            if (!container.querySelector('.reply-reply-form')) {
-                container.appendChild(replyReplyDiv);
-            };
-        });
-    };
-};
-
-const replyReplyContainers = document.querySelectorAll('.reply-reply-container');
-
-for (const replyReplyContainer of replyReplyContainers) {
-    const replyReplyReplyBtn = replyReplyContainer.querySelector('.reply-reply-reply-btn');
-
-    replyReplyReplyBtn.addEventListener('click', () => {
-        const replyReplyPK = replyReplyContainer.querySelector('#reply_reply_pk').value;
-        const replyReplyReplyFormAction = Urls.reply_reply(pk=replyReplyPK);
-
-        const replyReplyReplyForm = document.createElement('form');
-        replyReplyReplyForm.action = replyReplyReplyFormAction;
-        replyReplyReplyForm.method = 'post';
+    replyBtn.addEventListener('click', () => {
         
-        const replyReplyReply = document.createElement('input');
-        replyReplyReply.name = 'reply_reply_reply';
-        replyReplyReply.id = 'reply-reply-reply';
+        const pub_id = commentLi.querySelector('#pub_id').value;
+        const replyForm = document.createElement('form');
+        const replyFormAction = Urls.comment(pk=pub_id);
+        replyForm.action = replyFormAction;
+        replyForm.method = 'post';
 
-        const replyReplyReplyCsrfToken = document.createElement('input');
-        replyReplyReplyCsrfToken.type = 'hidden';
-        replyReplyReplyCsrfToken.name = 'csrfmiddlewaretoken';
-        replyReplyReplyCsrfToken.value = CSRF_TOKEN;
+        const replyInput = document.createElement('input');
+        replyInput.name = 'reply';
+        replyInput.id = 'reply';
+        replyInput.type = 'text';
 
-        const replyReplyReplyFormBtn = document.createElement('button');
-        const replyReplyReplyBtnI = document.createElement('i');
-        replyReplyReplyBtnI.className = 'fa-solid fa-reply';
-        replyReplyReplyFormBtn.appendChild(replyReplyReplyBtnI);
-        replyReplyReplyFormBtn.innerHTML += ' Reply';
+        const replyFormBtn = document.createElement('button');
+        replyFormBtn.textContent = 'Reply';
 
-        const replyReplyReplyCancelBtn = document.createElement('button');
-        const replyReplyReplyCancelBtnI = document.createElement('i');
-        replyReplyReplyCancelBtnI.className = 'fa-solid fa-times';
-        replyReplyReplyCancelBtn.appendChild(replyReplyReplyCancelBtnI);
-        replyReplyReplyCancelBtn.innerHTML += ' Cancel';
+        const replyFormCsrfToken = document.createElement('input');
+        replyFormCsrfToken.type = 'hidden';
+        replyFormCsrfToken.name = 'csrfmiddlewaretoken';
+        replyFormCsrfToken.value = CSRF_TOKEN;
 
-        replyReplyReplyForm.appendChild(replyReplyReply);
-        replyReplyReplyForm.appendChild(replyReplyReplyCsrfToken);
-        replyReplyReplyForm.appendChild(replyReplyReplyFormBtn);
-        
-        const replyReplyReplyDiv = document.createElement('div');
-        replyReplyReplyDiv.className = 'reply-reply-reply-div';
+        replyForm.appendChild(replyInput);
+        replyForm.appendChild(replyFormCsrfToken);
+        replyForm.appendChild(replyFormBtn);
 
-        replyReplyReplyDiv.appendChild(replyReplyReplyForm);
-        replyReplyReplyDiv.appendChild(replyReplyReplyCancelBtn);
-
-        replyReplyContainer.appendChild(replyReplyReplyDiv);
+        commentLi.appendChild(replyForm);
     });
 };

@@ -180,7 +180,7 @@
     border-bottom-left-radius: 5px;
 }
 
-.engagement > form {
+.engagement-div > form {
     width: 90%;
     margin: 1em auto 0 auto;
     display: flex;
@@ -243,13 +243,14 @@
 }
 
 .comments {
-    margin: 1em auto;
+    margin: 0.2em auto;
     list-style: none;
     width: 97%;
 }
 
 .comment-li {
-    margin-top: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
 }
 
 .comment-user {
@@ -297,145 +298,4 @@
 .comment-p p {
     width: 90ch;
     word-wrap: break-word;
-}
-
-.reply-div {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 0.3em;
-}
-
-.reply {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.replies {
-    margin-left: 1em;
-}
-
-.replies ul {
-    list-style: none;
-}
-
-.replies ul li {
-    margin-top: 0.5em;
-}
-
-.reply-container {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-    font-size: 10px;
-}
-
-.reply-user-data div {
-    display: flex;
-    align-items: center;
-    gap: 0.3em;
-}
-
-.reply-user-data p a {
-    color: #000;
-    text-decoration: none;
-}
-
-.reply-user-img {
-    width: 17px;
-    height: 17px;
-    border: 1px #F68537 solid;
-    border-radius: 50%;
-}
-
-.reply-user-img img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.reply-p {
-    background-color: #ddd;
-    padding: 0.3em 0.5em;
-    border-radius: 10px;
-    display: flex;
-    gap: 0.5em;
-}
-
-.reply-div input {
-    margin-right: 0.2em;
-}
-
-.post-btn, .cancel-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-.reply-reply {
-    font-size: 7px;
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-.reply-reply-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 1.5em;
-    gap: 1em;
-    font-size: 10px;
-}
-
-.reply-reply-user-data {
-    display: flex;
-    align-items: center;
-    gap: 0.3em;
-}
-
-.reply-reply-user-data p a {
-    color: #000;
-    text-decoration: none;
-}
-
-.reply-reply-user-img {
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    border: 1px #F68537 solid;
-}
-
-.reply-reply-user-img img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.reply-reply-form button {
-    margin-left: 0.5em;
-}
-
-.fa-times {
-    color: red;
-}
-
-.reply-reply-form-btn , .reply-reply-cancel-btn {
-    border: none;
-    background: none;
-    font-size: 10px;
-    cursor: pointer;
-}
-
-.reply-reply-reply-div {
-    display: flex;
-}
-
-.reply-reply-reply-btn {
-    border: none;
-    background: none;
-    font-size: 7px;
-    cursor: pointer;
 }

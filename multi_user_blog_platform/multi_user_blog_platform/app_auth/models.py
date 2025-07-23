@@ -82,17 +82,3 @@ class Comment(models.Model):
 
     publication = models.ForeignKey(to=Publication, on_delete=models.CASCADE)
     pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
-
-
-class Reply(models.Model):
-    reply = models.TextField(max_length=1500, null=False, blank=False)
-
-    pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
-    comment = models.ForeignKey(to=Comment, on_delete=models.CASCADE)
-
-
-class ReplyReply(models.Model):
-    reply_reply = models.CharField(max_length=1500, null=False, blank=False)
-
-    pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
-    reply = models.ForeignKey(to=Reply, on_delete=models.CASCADE)

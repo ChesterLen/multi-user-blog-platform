@@ -17,7 +17,5 @@ urlpatterns = [
         path('like/<int:pk>/', views.like, name='like'),
         path('unlike/<int:pk>/', views.unlike, name='unlike'),
         path('comment/<int:pk>/', views.comment, name='comment'),
-        path('reply/<int:pk>/', views.reply, name='reply'),
-        path('reply/reply/<int:pk>/', views.reply_reply, name='reply_reply'),
     ]))
 ]

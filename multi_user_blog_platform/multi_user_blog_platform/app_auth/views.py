@@ -206,48 +206,27 @@ def unlike(request, pk):
 
 
 def comment(request, pk):
+    comment_reply = None
+
     comment = request.POST.get('comment')
+    reply = request.POST.get('reply')
+
+    if comment is not None:
+        comment_reply = comment
+    elif reply is not None:
+        comment_reply = reply
+
+
     publication = models.Publication.objects.get(pk=pk)
+
+    from_pet = request.pet
+    to_pet = publication.pet
+
     form = forms.CommentForm
 
     if form.is_valid:
-        models.Comment.objects.create(comment=comment, publication=publication, pet=request.pet)
+        models.Comment.objects.create(comment=comment_reply, publication=publication, from_pet=from_pet, to_pet=to_pet)
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-
-
-def reply(request, pk):
-    reply = request.POST.get('reply')
-    comment = models.Comment.objects.get(pk=pk)
-    form = forms.ReplyForm
-
-    if form.is_valid:
-        models.Reply.objects.create(reply=reply, pet=request.pet, comment=comment)
-        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-
-    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-
-
-def reply_reply(request, pk):
-    reply = models.Reply.objects.get(pk=pk)
-    reply_reply = request.POST.get('reply_reply')
-    reply_reply_reply = request.POST.get('reply_reply_reply')
-
-    pet = request.pet
-
-    reply_key = None
-
-    if reply_reply:
-        reply_key = reply_reply
-    elif reply_reply_reply:
-        reply_key = reply_reply_reply
-    
-    form = forms.ReplyReplyForm
-
-    if form.is_valid:
-        models.ReplyReply.objects.create(reply_reply=reply_key, pet=pet, reply=reply)
-        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referere_not_found'))
-
-    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referere_not_found'))

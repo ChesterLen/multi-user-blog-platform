@@ -34,15 +34,3 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = models.Comment
         fields = ['comment']
-
-
-class ReplyForm(forms.ModelForm):
-    class Meta:
-        model = models.Reply
-        fields = ['reply']
-
-
-class ReplyReplyForm(forms.ModelForm):
-    class Meta:
-        model = models.ReplyReply
-        fields = ['reply_reply']
