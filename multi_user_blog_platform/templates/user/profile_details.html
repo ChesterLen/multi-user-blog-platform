@@ -108,9 +108,8 @@
                     {% for comment in publication.comment_set.all %}
                         <li class="comment-li">
                             <input type="hidden" name="pub_id" id="pub_id" value="{{ publication.pk }}">
-                            <input type="hidden" name="pub_pet_pk" id="pub_pet_pk" value="{{ publication.pet.pk }}">
-                            <input type="hidden" name="to_pet" id="to_pet" value="{{ comment.to_pet }}">
                             <div class="comment-user">
+
                                 {% if comment.pet.petimage_set.first.image.url %}
                                 <div class="comment-user-img">
                                     <img src="{{ comment.pet.petimage_set.first.image.url }}" alt="user image">
@@ -118,12 +117,32 @@
                                 {% else %}
                                 <div class="comment-user-img"></div>
                                 {% endif %}
+
                                 <p><a href="{% url 'profile_details' pk=comment.pet.pk %}">{{ comment.pet.name }}</p></a>
+                                
+                                <div class="comment-p">
+                                    <p>{{ comment.comment }}</p>
+                                    <input type="hidden" name="com_pk" id="com_pk" value="{{ comment.pk }}">
+                                </div>
                             </div>
-                            <div class="comment-p">
-                                <p>{{ comment.comment }}</p>
-                                <input type="hidden" name="com_pk" id="com_pk" value="{{ comment.pk }}">
-                            </div>
+                            {% if publication.reply_set.all %}
+                                <ul class="replies">
+                                    {% for reply in publication.reply_set.all %}
+                                        <li>
+                                            <div class="reply-user">
+                                                {% if reply.from_pet.petimage_set.first.image.url %}
+                                                    <div class="reply-user-img">
+                                                        <img src="{{ reply.from_pet.petimage_set.first.image.url }}" alt="pet image">
+                                                    </div>
+                                                {% else %}
+                                                    <div class="reply-user-img"></div>
+                                                {% endif %}
+                                                <p>@{{ reply.to_pet.name }} {{ reply.reply }}</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </li>
                     {% endfor %}
                 </ul>

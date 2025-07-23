@@ -218,3 +218,19 @@ def comment(request, pk):
 
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def reply(request, pk):
+    publication = models.Publication.objects.get(pk=pk)
+    reply = request.POST.get('reply')
+    
+    from_pet = request.pet
+    to_pet = publication.pet
+    
+    form = forms.ReplyForm
+
+    if form.is_valid:
+        models.Reply.objects.create(reply=reply, publication=publication, from_pet=from_pet, to_pet=to_pet)
+        return redirect(request.META.get('HTTP_REFERER', 'refirect_if_referer_not_found'))
+
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

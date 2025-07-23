@@ -299,3 +299,35 @@
     width: 90ch;
     word-wrap: break-word;
 }
+
+.replies {
+    list-style: none;
+    margin-top: 0.2em;
+    margin-left: 1em;
+}
+
+.reply-user-img {
+    width: 17px;
+    height: 17px;
+    border: 2px #f9964f solid;
+    border-radius: 50%;
+}
+
+.reply-user-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.reply-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 12px;
+}
+
+.reply-user p {
+    background-color: #ddd;
+    padding: 0.3em;
+    border-radius: 5px;
+}
