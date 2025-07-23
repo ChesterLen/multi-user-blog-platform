@@ -126,19 +126,21 @@
                                                         <li>
                                                             <div class="reply-container">
                                                                 <div class="reply-user-data">
-                                                                    {% if reply.pet.petimage_set.first.image.url %}
-                                                                        <div class="reply-user-img">
-                                                                            <img src="{{ reply.pet.petimage_set.first.image.url }}" alt="user image">
-                                                                        </div>
-                                                                    {% else %}
-                                                                        <div class="reply-user-img"></div>
-                                                                    {% endif %}
-                                                                    <p><a href="{% url 'profile_details' pk=reply.pet.pk %}">{{ comment.pet.name }}</p></a>
+                                                                    <div>
+                                                                        {% if reply.pet.petimage_set.first.image.url %}
+                                                                            <div class="reply-user-img">
+                                                                                <img src="{{ reply.pet.petimage_set.first.image.url }}" alt="user image">
+                                                                            </div>
+                                                                        {% else %}
+                                                                            <div class="reply-user-img"></div>
+                                                                        {% endif %}
+                                                                        <p><a href="{% url 'profile_details' pk=reply.pet.pk %}">{{ comment.pet.name }}</p></a>
 
-                                                                    <div class="reply-p">
-                                                                        <p>{{ reply.reply }}</p>
-                                                                        <input type="hidden" name="rep_pk" id="rep_pk" value="{{ reply.pk }}">
-                                                                        <button class="reply-reply"><i class="fa-solid fa-reply"></i> Reply</button>
+                                                                        <div class="reply-p">
+                                                                            <p>{{ reply.reply }}</p>
+                                                                            <input type="hidden" name="rep_pk" id="rep_pk" value="{{ reply.pk }}">
+                                                                            <button class="reply-reply"><i class="fa-solid fa-reply"></i> Reply</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
@@ -149,6 +151,7 @@
                                                                         <li>
                                                                             <div class="reply-reply-container">
                                                                                 <div class="reply-reply-user-data">
+                                                                                    <input type="hidden" name="reply_reply_pk" value="{{ reply_reply.pk }}" id="reply_reply_pk">
                                                                                     {% if reply_reply.pet.petimage_set.first.image.url %}
                                                                                         <div class="reply-reply-user-img">
                                                                                             <img src="{{ reply_reply.pet.petimage_set.first.image.url }}" alt="user image">
@@ -157,8 +160,9 @@
                                                                                         <div class="reply-reply-user-img"></div>
                                                                                     {% endif %}
                                                                                     <p><a href="{% url 'profile_details' pk=reply_reply.pet.pk %}">{{ reply_reply.pet.name }}</p></a>
+                                                                                    <p>{{ reply_reply.reply_reply }}</p>
+                                                                                    <button class="reply-reply-reply-btn"><i class="fa-solid fa-reply"></i> Reply</button>
                                                                                 </div>
-                                                                                <p>{{ reply_reply.reply_reply }}</p>
                                                                             </div>
                                                                         </li>
                                                                     {% endfor %}

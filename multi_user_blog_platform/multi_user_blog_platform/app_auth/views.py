@@ -233,12 +233,21 @@ def reply(request, pk):
 def reply_reply(request, pk):
     reply = models.Reply.objects.get(pk=pk)
     reply_reply = request.POST.get('reply_reply')
+    reply_reply_reply = request.POST.get('reply_reply_reply')
+
     pet = request.pet
+
+    reply_key = None
+
+    if reply_reply:
+        reply_key = reply_reply
+    elif reply_reply_reply:
+        reply_key = reply_reply_reply
     
     form = forms.ReplyReplyForm
 
     if form.is_valid:
-        models.ReplyReply.objects.create(reply_reply=reply_reply, pet=pet, reply=reply)
+        models.ReplyReply.objects.create(reply_reply=reply_key, pet=pet, reply=reply)
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referere_not_found'))
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referere_not_found'))

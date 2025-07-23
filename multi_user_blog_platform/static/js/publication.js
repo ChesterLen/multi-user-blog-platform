@@ -208,8 +208,7 @@ const replyReplyBtns = document.getElementsByClassName('reply-reply');
 if (replyReplyBtns) {
     for (const replyBtn of replyReplyBtns) {
         replyBtn.addEventListener('click', () => {
-            const container = replyBtn.parentNode.parentNode.parentNode.parentNode.querySelector('.reply-container');
-            console.log(container);
+            const container = replyBtn.parentNode.parentNode.parentNode.parentNode.querySelector('.reply-user-data');
             const repPK = container.querySelector('#rep_pk').value;
 
             const replyReplyForm = document.createElement('form');
@@ -221,6 +220,7 @@ if (replyReplyBtns) {
             const replyReplyInput = document.createElement('input');
             replyReplyInput.name = 'reply_reply';
             replyReplyInput.id = 'reply_reply';
+            replyReplyInput.required = true;
 
             const replyReplyCsrfToken = document.createElement('input');
             replyReplyCsrfToken.type = 'hidden';
@@ -234,13 +234,77 @@ if (replyReplyBtns) {
             replyReplyBtn.appendChild(replyReplyI);
             replyReplyBtn.innerHTML += ' Reply';
 
+            const replyReplyCancelBtn = document.createElement('button');
+            replyReplyCancelBtn.className = 'reply-reply-cancel-btn';
+            const replyReplyCancelI = document.createElement('i');
+            replyReplyCancelI.className = 'fa-solid fa-times';
+            replyReplyCancelBtn.appendChild(replyReplyCancelI);
+            replyReplyCancelBtn.innerHTML += ' Cancel';
+            replyReplyCancelBtn.addEventListener('click', () => {
+                container.removeChild(replyReplyDiv);
+            });
+
             replyReplyForm.appendChild(replyReplyInput);
             replyReplyForm.appendChild(replyReplyCsrfToken);
             replyReplyForm.appendChild(replyReplyBtn);
 
+            const replyReplyDiv = document.createElement('div');
+            replyReplyDiv.className = 'reply-reply-div';
+
+            replyReplyDiv.appendChild(replyReplyForm);
+            replyReplyDiv.appendChild(replyReplyCancelBtn);
+
             if (!container.querySelector('.reply-reply-form')) {
-                container.appendChild(replyReplyForm);
+                container.appendChild(replyReplyDiv);
             };
         });
     };
+};
+
+const replyReplyContainers = document.querySelectorAll('.reply-reply-container');
+
+for (const replyReplyContainer of replyReplyContainers) {
+    const replyReplyReplyBtn = replyReplyContainer.querySelector('.reply-reply-reply-btn');
+
+    replyReplyReplyBtn.addEventListener('click', () => {
+        const replyReplyPK = replyReplyContainer.querySelector('#reply_reply_pk').value;
+        const replyReplyReplyFormAction = Urls.reply_reply(pk=replyReplyPK);
+
+        const replyReplyReplyForm = document.createElement('form');
+        replyReplyReplyForm.action = replyReplyReplyFormAction;
+        replyReplyReplyForm.method = 'post';
+        
+        const replyReplyReply = document.createElement('input');
+        replyReplyReply.name = 'reply_reply_reply';
+        replyReplyReply.id = 'reply-reply-reply';
+
+        const replyReplyReplyCsrfToken = document.createElement('input');
+        replyReplyReplyCsrfToken.type = 'hidden';
+        replyReplyReplyCsrfToken.name = 'csrfmiddlewaretoken';
+        replyReplyReplyCsrfToken.value = CSRF_TOKEN;
+
+        const replyReplyReplyFormBtn = document.createElement('button');
+        const replyReplyReplyBtnI = document.createElement('i');
+        replyReplyReplyBtnI.className = 'fa-solid fa-reply';
+        replyReplyReplyFormBtn.appendChild(replyReplyReplyBtnI);
+        replyReplyReplyFormBtn.innerHTML += ' Reply';
+
+        const replyReplyReplyCancelBtn = document.createElement('button');
+        const replyReplyReplyCancelBtnI = document.createElement('i');
+        replyReplyReplyCancelBtnI.className = 'fa-solid fa-times';
+        replyReplyReplyCancelBtn.appendChild(replyReplyReplyCancelBtnI);
+        replyReplyReplyCancelBtn.innerHTML += ' Cancel';
+
+        replyReplyReplyForm.appendChild(replyReplyReply);
+        replyReplyReplyForm.appendChild(replyReplyReplyCsrfToken);
+        replyReplyReplyForm.appendChild(replyReplyReplyFormBtn);
+        
+        const replyReplyReplyDiv = document.createElement('div');
+        replyReplyReplyDiv.className = 'reply-reply-reply-div';
+
+        replyReplyReplyDiv.appendChild(replyReplyReplyForm);
+        replyReplyReplyDiv.appendChild(replyReplyReplyCancelBtn);
+
+        replyReplyContainer.appendChild(replyReplyReplyDiv);
+    });
 };
