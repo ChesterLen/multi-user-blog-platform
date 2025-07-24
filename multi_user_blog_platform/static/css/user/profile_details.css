@@ -275,9 +275,42 @@
     padding: 0.1em 0.3em;
     border-radius: 10px;
     margin-left: 0.3em;
+    display: flex;
+    align-items: center;
 }
 
-.reply-btn {
-    font-size: 10px;
+.comment a {
+    font-size: 7px;
     margin-left: 0.5em;
+    cursor: pointer;
+}
+
+.edit-form-div {
+    display: flex;
+}
+
+.edit-form-div > button {
+    padding: 0.1em 0.3em 0 0.3em;
+    border: none;
+    cursor: pointer;
+}
+
+.comment form button {
+    padding: 0.1em 0.3em 0 0.3em;
+    border: none;
+    margin-left: 0.2em;
+    cursor: pointer;
+}
+
+#comment-edit {
+    border: none;
+    background-color: #eee;
+}
+
+.fa-times {
+    color: red;
+}
+
+.fa-check {
+    color: rgb(47, 207, 47);
 }

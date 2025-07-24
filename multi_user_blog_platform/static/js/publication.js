@@ -155,8 +155,79 @@ for (const card of commentCards) {
     replyBtn.appendChild(replyBtnI);
     replyBtn.innerHTML += ' Reply';
 
+    const editBtn = document.createElement('a');
+    editBtn.className = 'edit-btn';
+    const editBtnI = document.createElement('i');
+    editBtnI.className = 'fa-solid fa-edit';
+    editBtn.appendChild(editBtnI);
+    editBtn.innerHTML += ' Edit';
+
+    const deleteBtn = document.createElement('a');
+    deleteBtn.className = 'delete-btn';
+    const deleteBtnI = document.createElement('i');
+    deleteBtnI.className = 'fa-solid fa-times';
+    deleteBtn.appendChild(deleteBtnI);
+    deleteBtn.innerHTML += ' Delete';
+
+    editBtn.addEventListener('click', () => {
+        const commentP = comment.querySelector('p');
+
+        const editCommentForm = document.createElement('form');
+        const comPK = document.querySelector('#com-pk').value;
+        const editCommentFormAction = Urls.comment_edit(pk=comPK);
+        editCommentForm.action = editCommentFormAction
+        editCommentForm.method = 'post';
+
+        const editInput = document.createElement('input');
+        editInput.value = commentP.textContent;
+        editInput.name = 'comment_edit';
+        editInput.id = 'comment-edit';
+
+        const editCommentFormCsrfToken = document.createElement('input');
+        editCommentFormCsrfToken.type = 'hidden';
+        editCommentFormCsrfToken.value = CSRF_TOKEN;
+        editCommentFormCsrfToken.name = 'csrfmiddlewaretoken';
+
+        const editFormBtn = document.createElement('button');
+        editFormBtn.className = 'form-edit-btn';
+        const editFormBtnI = document.createElement('i');
+        editFormBtnI.className = 'fa-solid fa-check';
+        editFormBtn.appendChild(editFormBtnI);
+
+        const editFormCancelBtn = document.createElement('button');
+        const editFormCancelBtnI = document.createElement('i');
+        editFormCancelBtnI.className = 'fa-solid fa-times';
+        editFormCancelBtn.appendChild(editFormCancelBtnI);
+        editFormCancelBtn.addEventListener('click', () => {
+            comment.removeChild(editFormDiv);
+            comment.prepend(commentP);
+        });
+
+        const editFormDiv = document.createElement('div');
+        editFormDiv.className = 'edit-form-div';
+
+
+        editCommentForm.appendChild(editInput);
+        editCommentForm.appendChild(editCommentFormCsrfToken);
+        editCommentForm.appendChild(editFormBtn);
+
+        editFormDiv.appendChild(editCommentForm);
+        editFormDiv.appendChild(editFormCancelBtn);
+
+        comment.removeChild(commentP);
+        comment.prepend(editFormDiv);
+    });
+
     const comment = card.querySelector('.comment');
-    comment.appendChild(replyBtn);
+
+    const divBtns = document.createElement('div');
+    divBtns.className = 'comment-btns';
+
+    divBtns.appendChild(replyBtn);
+    divBtns.appendChild(editBtn);
+    divBtns.appendChild(deleteBtn);
+
+    comment.appendChild(divBtns);
 
 
     // replyBtn.addEventListener('click', () => {
