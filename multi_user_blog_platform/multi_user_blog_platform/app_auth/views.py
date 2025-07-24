@@ -235,8 +235,10 @@ def comment_edit(request, pk):
 
 
 def reply(request, pk):
-    publication = models.Publication.objects.get(pk=pk)
     reply = request.POST.get('reply')
+    publication = models.Publication.objects.get(pk=pk)
+    comment_pk = request.POST.get('com_pk')
+    comment = models.Comment.objects.get(pk=comment_pk)
     
     from_pet = request.pet
     to_pet = models.Comment.objects.get(pk=request.POST.get('com_pk')).pet
@@ -244,7 +246,7 @@ def reply(request, pk):
     form = forms.ReplyForm
 
     if form.is_valid:
-        models.Reply.objects.create(reply=reply, publication=publication, from_pet=from_pet, to_pet=to_pet)
+        models.Reply.objects.create(reply=reply, publication=publication, comment=comment, from_pet=from_pet, to_pet=to_pet)
         return redirect(request.META.get('HTTP_REFERER', 'refirect_if_referer_not_found'))
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

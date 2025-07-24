@@ -267,8 +267,8 @@
 }
 
 .comment-user-img img {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
 }
 
@@ -315,4 +315,58 @@
 
 .fa-check {
     color: rgb(47, 207, 47);
+}
+
+.reply-card {
+    display: flex;
+    margin-left: 1em;
+    margin-top: 0.5em;
+}
+
+.reply-user-img {
+    width: 17px;
+    height: 17px;
+    border: 0.5px #fff solid;
+    border-radius: 50%;
+}
+
+.reply-user-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.reply-user-data {
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+    background-color: #faab73;
+    padding: 0.3em 0.5em;
+    border-radius: 10px;
+    margin-right: 0.3em;
+    font-size: 7px;
+    font-weight: bold;
+}
+
+.reply {
+    display: flex;
+    align-items: center;
+    background-color: #eee;
+    padding: 0.1em 0.3em;
+    border-radius: 10px;
+}
+
+.reply-div-btns button {
+    border: none;
+    background: none;
+    font-size: 7px;
+    margin-left: 0.5em;
+}
+
+#reply-pet-name {
+    font-size: 10px;
+    color: #fff;
+    background-color: #f8781c;
+    padding: 0.1em 0.3em;
+    border-radius: 15px;
 }

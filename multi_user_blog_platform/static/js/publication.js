@@ -285,4 +285,35 @@ for (const card of commentCards) {
     // });
 };
 
-const userReplies = document.querySelectorAll('.reply-user');
+const replyCards = document.querySelectorAll('.reply-card');
+
+for (const replyCard of replyCards) {
+    const reply = replyCard.querySelector('.reply');
+
+    const replyBtn = document.createElement('button');
+    const replyBtnI = document.createElement('i');
+    replyBtnI.className = 'fa-solid fa-reply';
+    replyBtn.appendChild(replyBtnI);
+    replyBtn.innerHTML += ' Reply';
+
+    const replyCancelBtn = document.createElement('button');
+    const replyCancelBtnI = document.createElement('i');
+    replyCancelBtnI.className = 'fa-solid fa-edit';
+    replyCancelBtn.appendChild(replyCancelBtnI);
+    replyCancelBtn.innerHTML += ' Cancel';
+
+    const replyDeleteBtn = document.createElement('button');
+    const replyDeleteBtnI = document.createElement('i');
+    replyDeleteBtnI.className = 'fa-solid fa-times';
+    replyDeleteBtn.appendChild(replyDeleteBtnI);
+    replyDeleteBtn.innerHTML += ' Delete';
+
+    const divBtns = document.createElement('div');
+    divBtns.className = 'reply-div-btns';
+
+    divBtns.appendChild(replyBtn);
+    divBtns.appendChild(replyCancelBtn);
+    divBtns.appendChild(replyDeleteBtn);
+
+    reply.appendChild(divBtns);
+};
