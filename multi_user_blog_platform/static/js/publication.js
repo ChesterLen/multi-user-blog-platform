@@ -99,6 +99,7 @@ if (formPopUp) {
 for (const engagement of engagements) {
     const btn = engagement.children[0].children[1].children[1];
     btn.addEventListener('click', () => {
+        console.log('It Works!');
         const pubPK = engagement.children[0].children[1].children[0].children[0].value;
 
         const commentForm = document.createElement('form');
@@ -144,46 +145,44 @@ for (const engagement of engagements) {
     });
 };
 
-const comments = document.querySelector('.comments');
+const commentCards = document.querySelectorAll('.comment-card');
 
-const commentsLi = comments.querySelectorAll('.comment-li');
-
-for (const commentLi of commentsLi) {
-    const replyBtn = document.createElement('button');
+for (const card of commentCards) {
+    const replyBtn = document.createElement('a');
     replyBtn.className = 'reply-btn';
     const replyBtnI = document.createElement('i');
     replyBtnI.className = 'fa-solid fa-reply';
     replyBtn.appendChild(replyBtnI);
     replyBtn.innerHTML += ' Reply';
 
-    commentLi.querySelector('.comment-user').appendChild(replyBtn);
+    const comment = card.querySelector('.comment');
+    comment.appendChild(replyBtn);
 
-    replyBtn.addEventListener('click', () => {
-        const pub_id = commentLi.querySelector('#pub_id').value;
-        const replyForm = document.createElement('form');
-        const replyFormAction = Urls.reply(pk=pub_id);
-        replyForm.action = replyFormAction;
-        replyForm.method = 'post';
 
-        const replyInput = document.createElement('input');
-        replyInput.name = 'reply';
-        replyInput.id = 'reply';
-        replyInput.type = 'text';
+    // replyBtn.addEventListener('click', () => {
+    //     const pub_id = commentLi.querySelector('#pub_id').value;
+    //     const replyForm = document.createElement('form');
+    //     const replyFormAction = Urls.reply(pk=pub_id);
+    //     replyForm.action = replyFormAction;
+    //     replyForm.method = 'post';
 
-        const replyFormBtn = document.createElement('button');
-        replyFormBtn.textContent = 'Reply';
+    //     const replyInput = document.createElement('input');
+    //     replyInput.name = 'reply';
+    //     replyInput.id = 'reply';
+    //     replyInput.type = 'text';
 
-        const replyFormCsrfToken = document.createElement('input');
-        replyFormCsrfToken.type = 'hidden';
-        replyFormCsrfToken.name = 'csrfmiddlewaretoken';
-        replyFormCsrfToken.value = CSRF_TOKEN;
+    //     const replyFormBtn = document.createElement('button');
+    //     replyFormBtn.textContent = 'Reply';
 
-        replyForm.appendChild(replyInput);
-        replyForm.appendChild(replyFormCsrfToken);
-        replyForm.appendChild(replyFormBtn);
+    //     const replyFormCsrfToken = document.createElement('input');
+    //     replyFormCsrfToken.type = 'hidden';
+    //     replyFormCsrfToken.name = 'csrfmiddlewaretoken';
+    //     replyFormCsrfToken.value = CSRF_TOKEN;
 
-        commentLi.appendChild(replyForm);
-    });
+    //     replyForm.appendChild(replyInput);
+    //     replyForm.appendChild(replyFormCsrfToken);
+    //     replyForm.appendChild(replyFormBtn);
+    // });
 };
 
 const userReplies = document.querySelectorAll('.reply-user');
