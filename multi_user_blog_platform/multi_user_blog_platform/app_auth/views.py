@@ -243,7 +243,8 @@ def reply(request, pk):
     to_pet = None
 
     if request.POST.get('to_pet'):
-        to_pet = models.Reply.objects.get(pk=request.POST.get('to_pet')).to_pet
+        print(request.POST.get('to_pet'))
+        to_pet = models.Reply.objects.get(pk=request.POST.get('to_pet')).from_pet
     else:
         to_pet = models.Comment.objects.get(pk=comment_pk).pet
     
