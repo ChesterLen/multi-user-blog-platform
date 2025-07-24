@@ -295,6 +295,9 @@ for (const replyCard of replyCards) {
     replyBtnI.className = 'fa-solid fa-reply';
     replyBtn.appendChild(replyBtnI);
     replyBtn.innerHTML += ' Reply';
+    replyBtn.addEventListener('click', () => {
+        console.log('It Works!');
+    });
 
     const replyCancelBtn = document.createElement('button');
     const replyCancelBtnI = document.createElement('i');
