@@ -171,11 +171,17 @@ for (const card of commentCards) {
 
     replyBtn.addEventListener('click', () => {
         const replyFormCommentForm = document.createElement('form');
-        const pubPK = comment.parentNode.querySelector('#pub-pk').value;
         const comPK = comment.parentNode.querySelector('#com-pk');
+        const pubPK = comment.parentNode.querySelector('#pub-pk').value;
         const replyFormCommentFormAction = Urls.reply(pk=pubPK);
         replyFormCommentForm.action = replyFormCommentFormAction;
         replyFormCommentForm.method = 'post';
+
+        const pubPkHidden = document.createElement('input');
+        pubPkHidden.type = 'hidden';
+        pubPkHidden.value = pubPK;
+        pubPkHidden.name = 'pub_pk';
+        pubPkHidden.id = 'pub-pk';
 
         const replyInput = document.createElement('input');
         replyInput.type = 'text';
@@ -190,12 +196,13 @@ for (const card of commentCards) {
         const replyFormCommentFormBtn = document.createElement('button');
         replyFormCommentFormBtn.textContent = 'Reply';
 
+        replyFormCommentForm.appendChild(pubPkHidden);
         replyFormCommentForm.appendChild(comPK);
         replyFormCommentForm.appendChild(replyInput);
         replyFormCommentForm.appendChild(replyFormCommentFormCsrfToken);
         replyFormCommentForm.appendChild(replyFormCommentFormBtn);
 
-        comment.parentNode.parentNode.querySelector('.reply-card').prepend(replyFormCommentForm);
+        card.appendChild(replyFormCommentForm);
     });
 
     editBtn.addEventListener('click', () => {
@@ -257,32 +264,6 @@ for (const card of commentCards) {
     divBtns.appendChild(deleteBtn);
 
     comment.appendChild(divBtns);
-
-
-    // replyBtn.addEventListener('click', () => {
-    //     const pub_id = commentLi.querySelector('#pub_id').value;
-    //     const replyForm = document.createElement('form');
-    //     const replyFormAction = Urls.reply(pk=pub_id);
-    //     replyForm.action = replyFormAction;
-    //     replyForm.method = 'post';
-
-    //     const replyInput = document.createElement('input');
-    //     replyInput.name = 'reply';
-    //     replyInput.id = 'reply';
-    //     replyInput.type = 'text';
-
-    //     const replyFormBtn = document.createElement('button');
-    //     replyFormBtn.textContent = 'Reply';
-
-    //     const replyFormCsrfToken = document.createElement('input');
-    //     replyFormCsrfToken.type = 'hidden';
-    //     replyFormCsrfToken.name = 'csrfmiddlewaretoken';
-    //     replyFormCsrfToken.value = CSRF_TOKEN;
-
-    //     replyForm.appendChild(replyInput);
-    //     replyForm.appendChild(replyFormCsrfToken);
-    //     replyForm.appendChild(replyFormBtn);
-    // });
 };
 
 const replyCards = document.querySelectorAll('.reply-card');
@@ -296,14 +277,68 @@ for (const replyCard of replyCards) {
     replyBtn.appendChild(replyBtnI);
     replyBtn.innerHTML += ' Reply';
     replyBtn.addEventListener('click', () => {
-        console.log('It Works!');
+        const replyForm = document.createElement('form');
+        const pubPK = replyCard.querySelector('#pub-pk').value;
+        const comPK = replyCard.querySelector('#com-pk').value;
+        const replyFormAction = Urls.reply(pk=pubPK);
+        replyForm.action = replyFormAction;
+        replyForm.method = 'post';
+
+        const hiddenInputPubPK = document.createElement('input');
+        hiddenInputPubPK.type = 'hidden';
+        hiddenInputPubPK.value = pubPK;
+        hiddenInputPubPK.name = 'pub_pk';
+        hiddenInputPubPK.id = 'pub-pk';
+
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.value = comPK;
+        hiddenInput.name = 'com_pk';
+        hiddenInput.id = 'com-pk';
+
+        const hiddenToPet = document.createElement('input');
+        hiddenToPet.type = 'hidden';
+        const toPet = replyCard.querySelector('#to-pet').value;
+        hiddenToPet.value = toPet;
+        hiddenToPet.name = 'to_pet';
+        hiddenToPet.id = 'to-pet';
+
+        const replyInput = document.createElement('input');
+        replyInput.type = 'text';
+        replyInput.name = 'reply';
+        replyInput.id = 'reply';
+
+        const replyCsrfToken = document.createElement('input');
+        replyCsrfToken.type = 'hidden';
+        replyCsrfToken.value = CSRF_TOKEN;
+        replyCsrfToken.name = 'csrfmiddlewaretoken';
+
+        const replyBtn = document.createElement('button');
+        const replyBtnI = document.createElement('i');
+        replyBtnI.className = 'fa-solid fa-reply';
+        replyBtn.appendChild(replyBtnI);
+        replyBtn.innerHTML += ' Reply';
+
+        const replyDiv = document.createElement('div');
+        replyDiv.className = 'reply-reply-div';
+
+        replyForm.appendChild(hiddenInputPubPK);
+        replyForm.appendChild(hiddenInput);
+        replyForm.appendChild(hiddenToPet);
+        replyForm.appendChild(replyInput);
+        replyForm.appendChild(replyCsrfToken);
+        replyForm.appendChild(replyBtn);
+
+        replyDiv.appendChild(replyForm);
+
+        replyCard.appendChild(replyDiv);
     });
 
     const replyCancelBtn = document.createElement('button');
     const replyCancelBtnI = document.createElement('i');
     replyCancelBtnI.className = 'fa-solid fa-edit';
     replyCancelBtn.appendChild(replyCancelBtnI);
-    replyCancelBtn.innerHTML += ' Cancel';
+    replyCancelBtn.innerHTML += ' Edit';
 
     const replyDeleteBtn = document.createElement('button');
     const replyDeleteBtnI = document.createElement('i');

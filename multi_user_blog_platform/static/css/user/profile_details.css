@@ -318,7 +318,6 @@
 }
 
 .reply-card {
-    display: flex;
     margin-left: 1em;
     margin-top: 0.5em;
 }
@@ -338,14 +337,6 @@
 
 .reply-user-data {
     display: flex;
-    gap: 0.3em;
-    align-items: center;
-    background-color: #faab73;
-    padding: 0.3em 0.5em;
-    border-radius: 10px;
-    margin-right: 0.3em;
-    font-size: 7px;
-    font-weight: bold;
 }
 
 .reply {
@@ -356,11 +347,12 @@
     border-radius: 10px;
 }
 
-.reply-div-btns button {
+.reply button {
     border: none;
     background: none;
     font-size: 7px;
     margin-left: 0.5em;
+    cursor: pointer;
 }
 
 #reply-pet-name {

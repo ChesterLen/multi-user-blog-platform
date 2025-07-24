@@ -236,12 +236,18 @@ def comment_edit(request, pk):
 
 def reply(request, pk):
     reply = request.POST.get('reply')
-    publication = models.Publication.objects.get(pk=pk)
+    publication = models.Publication.objects.get(pk=request.POST.get('pub_pk'))
     comment_pk = request.POST.get('com_pk')
     comment = models.Comment.objects.get(pk=comment_pk)
+
+    to_pet = None
+
+    if request.POST.get('to_pet'):
+        to_pet = models.Reply.objects.get(pk=request.POST.get('to_pet')).to_pet
+    else:
+        to_pet = models.Comment.objects.get(pk=comment_pk).pet
     
     from_pet = request.pet
-    to_pet = models.Comment.objects.get(pk=request.POST.get('com_pk')).pet
     
     form = forms.ReplyForm
 

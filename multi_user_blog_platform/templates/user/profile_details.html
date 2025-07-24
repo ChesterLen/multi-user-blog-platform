@@ -130,22 +130,25 @@
                 {% if comment.reply_set.first %}
                     {% for reply in comment.reply_set.all %}
                         <div class="reply-card">
-                            <input type="hidden" name="rep_pk" value="{{ reply.pk }}">
-                            <div class="reply-user-data">
-                                {% if reply.from_pet.petimage_set.first %}
-                                    <div class="reply-user-img">
-                                        <img src="{{ reply.from_pet.petimage_set.first.image.url }}" alt="user image">
-                                    </div>
-                                {% else %}
-                                    <div class="reply-user-img"></div>
-                                {% endif %}
-                                <p>{{ reply.from_pet.name }}</p>
-                            </div>
-                            <div class="reply">
-                                <p><span id="reply-pet-name">@{{ reply.to_pet.name }}</span> {{ reply.reply }}</p>
+                            <div class="container">
+                                <input type="hidden" value="{{ comment.pk }}" name="com_pk" id="com-pk">
+                                <input type="hidden" value="{{ reply.pk }}" name="to_pet" id="to-pet">
+                                <input type="hidden" value="{{ reply.publication.pk }}" name="pub_pk" id="pub-pk">
+                                <div class="reply-user-data">
+                                    {% if reply.from_pet.petimage_set.first %}
+                                        <div class="reply-user-img">
+                                            <img src="{{ reply.from_pet.petimage_set.first.image.url }}" alt="user image">
+                                        </div>
+                                    {% else %}
+                                        <div class="reply-user-img"></div>
+                                    {% endif %}
+                                    <p>{{ reply.from_pet.name }}</p>
+                                </div>
+                                <div class="reply">
+                                    <span id="reply-pet-name">@{{ reply.to_pet.name }}</span><p> {{ reply.reply }}</p>
+                                </div>
                             </div>
                         </div>
-                        <p>dsada</p>
                     {% endfor %}
                 {% endif %}
             </div>
