@@ -239,7 +239,7 @@ def reply(request, pk):
     reply = request.POST.get('reply')
     
     from_pet = request.pet
-    to_pet = publication.pet
+    to_pet = models.Comment.objects.get(pk=request.POST.get('com_pk')).pet
     
     form = forms.ReplyForm
 

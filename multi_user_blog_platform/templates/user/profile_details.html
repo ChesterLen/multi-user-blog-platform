@@ -107,22 +107,34 @@
     {% if publication.comment_set.all %}
         {% for comment in publication.comment_set.all %}
             <div class="comment-card">
-                <input type="hidden" value="{{ comment.pk }}" name="com_pk" id="com-pk">
-                {% if comment.pet.petimage_set.first.exists %}
-                    <div class="comment-user-data">
-                        <div class="comment-user-img">   
-                            <img src="{{ comment.pet.petimage_set.first.image.url }}" alt="user image">
+                <div class="container">
+                    <input type="hidden" value="{{ comment.pk }}" name="com_pk" id="com-pk">
+                    <input type="hidden" value="{{ comment.publication.pk }}" name="pub_id" id="pub-pk">
+                    {% if comment.pet.petimage_set.first.exists %}
+                        <div class="comment-user-data">
+                            <div class="comment-user-img">   
+                                <img src="{{ comment.pet.petimage_set.first.image.url }}" alt="user image">
+                            </div>
+                            <p>{{ comment.pet.name }}</p>
                         </div>
-                        <p>{{ comment.pet.name }}</p>
+                    {% else %}
+                        <div class="comment-user-data">
+                            <div class="comment-user-img"></div>
+                            <p>{{ comment.pet.name }}</p>
+                        </div>
+                    {% endif %}
+                    <div class="comment">
+                        <p>{{ comment.comment }}</p>
                     </div>
-                {% else %}
-                    <div class="comment-user-data">
-                        <div class="comment-user-img"></div>
-                        <p>{{ comment.pet.name }}</p>
-                    </div>
-                {% endif %}
-                <div class="comment">
-                    <p>{{ comment.comment }}</p>
+                </div>
+                <div class="reply-card">
+                    {% if publication.reply_set.first %}
+                        {% for reply in publication.reply_set.all %}
+                            {% if comment.pet.pk == reply.to_pet.pk %}
+                                {{ reply.from_pet.name }} {{ reply.reply }}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

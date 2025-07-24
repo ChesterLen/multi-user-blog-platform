@@ -242,10 +242,12 @@
     color: red;
 }
 
-.comment-card {
+.comment-card .container {
     display: flex;
-    align-items: center;
-    margin: 0.5em 0 0 1em;
+}
+
+.comment-card {
+    margin-top: 1em;
 }
 
 .comment-user-data {

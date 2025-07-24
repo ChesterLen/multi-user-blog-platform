@@ -169,6 +169,35 @@ for (const card of commentCards) {
     deleteBtn.appendChild(deleteBtnI);
     deleteBtn.innerHTML += ' Delete';
 
+    replyBtn.addEventListener('click', () => {
+        const replyFormCommentForm = document.createElement('form');
+        const pubPK = comment.parentNode.querySelector('#pub-pk').value;
+        const comPK = comment.parentNode.querySelector('#com-pk');
+        const replyFormCommentFormAction = Urls.reply(pk=pubPK);
+        replyFormCommentForm.action = replyFormCommentFormAction;
+        replyFormCommentForm.method = 'post';
+
+        const replyInput = document.createElement('input');
+        replyInput.type = 'text';
+        replyInput.name = 'reply';
+        replyInput.id = 'reply';
+
+        const replyFormCommentFormCsrfToken = document.createElement('input');
+        replyFormCommentFormCsrfToken.type = 'hidden';
+        replyFormCommentFormCsrfToken.value = CSRF_TOKEN;
+        replyFormCommentFormCsrfToken.name = 'csrfmiddlewaretoken';
+
+        const replyFormCommentFormBtn = document.createElement('button');
+        replyFormCommentFormBtn.textContent = 'Reply';
+
+        replyFormCommentForm.appendChild(comPK);
+        replyFormCommentForm.appendChild(replyInput);
+        replyFormCommentForm.appendChild(replyFormCommentFormCsrfToken);
+        replyFormCommentForm.appendChild(replyFormCommentFormBtn);
+
+        comment.parentNode.parentNode.querySelector('.reply-card').prepend(replyFormCommentForm);
+    });
+
     editBtn.addEventListener('click', () => {
         const commentP = comment.querySelector('p');
 
