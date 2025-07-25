@@ -390,3 +390,15 @@
     padding: 0.1em 0.3em;
     border-radius: 15px;
 }
+
+.reply-reply-div {
+    display: flex;
+    align-items: center;
+}
+
+.reply-reply-div button {
+    border: none;
+    background: none;
+    margin-left: 0.2em;
+    cursor: pointer;
+}

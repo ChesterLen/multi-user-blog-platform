@@ -199,6 +199,7 @@ for (const card of commentCards) {
         replyInput.type = 'text';
         replyInput.name = 'reply';
         replyInput.id = 'reply';
+        replyInput.required = true;
 
         const replyFormCommentFormCsrfToken = document.createElement('input');
         replyFormCommentFormCsrfToken.type = 'hidden';
@@ -340,6 +341,7 @@ for (const replyCard of replyCards) {
         replyInput.type = 'text';
         replyInput.name = 'reply';
         replyInput.id = 'reply';
+        replyInput.required = true;
 
         const replyCsrfToken = document.createElement('input');
         replyCsrfToken.type = 'hidden';
@@ -350,7 +352,14 @@ for (const replyCard of replyCards) {
         const replyBtnI = document.createElement('i');
         replyBtnI.className = 'fa-solid fa-reply';
         replyBtn.appendChild(replyBtnI);
-        replyBtn.innerHTML += ' Reply';
+
+        const cancelBtn = document.createElement('button');
+        const cancelBtnI = document.createElement('i');
+        cancelBtnI.className = 'fa-solid fa-times';
+        cancelBtn.appendChild(cancelBtnI);
+        cancelBtn.addEventListener('click', () => {
+            replyCard.removeChild(replyDiv);
+        });
 
         const replyDiv = document.createElement('div');
         replyDiv.className = 'reply-reply-div';
@@ -363,6 +372,7 @@ for (const replyCard of replyCards) {
         replyForm.appendChild(replyBtn);
 
         replyDiv.appendChild(replyForm);
+        replyDiv.appendChild(cancelBtn);
 
         if (!replyCard.querySelector('.reply-reply-div')) {
             replyCard.appendChild(replyDiv);
