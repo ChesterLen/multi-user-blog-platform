@@ -99,7 +99,6 @@ if (formPopUp) {
 for (const engagement of engagements) {
     const btn = engagement.children[0].children[1].children[1];
     btn.addEventListener('click', () => {
-        console.log('It Works!');
         const pubPK = engagement.children[0].children[1].children[0].children[0].value;
 
         const commentForm = document.createElement('form');
