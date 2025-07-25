@@ -208,7 +208,8 @@ for (const card of commentCards) {
         replyFormCommentForm.appendChild(replyFormCommentFormCsrfToken);
         replyFormCommentForm.appendChild(replyFormCommentFormBtn);
 
-        card.appendChild(replyFormCommentForm);
+        const referenceNode = card.children[1];
+        card.insertBefore(replyFormCommentForm, referenceNode);
     });
 
     editBtn.addEventListener('click', () => {
@@ -244,13 +245,6 @@ for (const card of commentCards) {
             comment.removeChild(editFormDiv);
             comment.prepend(commentP);
         });
-
-        // deleteBtn.addEventListener('click', () => {
-        //     const deleteA = document.createElement('a');
-        //     const comPK = document.querySelector('#com-pk').value;
-        //     const deleteCommentUrl = Urls.comment_delete(pk=comPK);
-        //     deleteA.href = deleteCommentUrl;
-        // })
 
         const editFormDiv = document.createElement('div');
         editFormDiv.className = 'edit-form-div';
@@ -289,6 +283,7 @@ for (const replyCard of replyCards) {
     replyBtnI.className = 'fa-solid fa-reply';
     replyBtn.appendChild(replyBtnI);
     replyBtn.innerHTML += ' Reply';
+
     replyBtn.addEventListener('click', () => {
         const replyForm = document.createElement('form');
         const pubPK = replyCard.querySelector('#pub-pk').value;
@@ -347,24 +342,76 @@ for (const replyCard of replyCards) {
         replyCard.appendChild(replyDiv);
     });
 
-    const replyCancelBtn = document.createElement('button');
-    const replyCancelBtnI = document.createElement('i');
-    replyCancelBtnI.className = 'fa-solid fa-edit';
-    replyCancelBtn.appendChild(replyCancelBtnI);
-    replyCancelBtn.innerHTML += ' Edit';
+    const editBtn = document.createElement('button');
+    const editBtnI = document.createElement('i');
+    editBtnI.className = 'fa-solid fa-edit';
+    editBtn.appendChild(editBtnI);
+    editBtn.innerHTML += ' Edit';
 
-    const replyDeleteBtn = document.createElement('button');
-    const replyDeleteBtnI = document.createElement('i');
-    replyDeleteBtnI.className = 'fa-solid fa-times';
-    replyDeleteBtn.appendChild(replyDeleteBtnI);
-    replyDeleteBtn.innerHTML += ' Delete';
+    editBtn.addEventListener('click', () => {
+        let replyP = reply.querySelector('.reply p');
+        console.log(replyP.textContent);
+
+        const editForm = document.createElement('form');
+        editForm.className = 'reply-edit-form';
+        const repPK = replyCard.querySelector('#to-pet').value;
+        const editFormAction = Urls.reply_edit(pk=repPK);
+        editForm.action = editFormAction;
+        editForm.method = 'post';
+
+        const editInput = document.createElement('input');
+        editInput.name = 'edit_input';
+        editInput.id = 'edit-input';
+        editInput.value = replyP.textContent;
+
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.value = CSRF_TOKEN;
+        csrfToken.name = 'csrfmiddlewaretoken';
+
+        const editBtn = document.createElement('button');
+        const editBtnI = document.createElement('i');
+        editBtnI.className = 'fa-solid fa-check';
+        editBtn.appendChild(editBtnI);
+
+        const cancelBtn = document.createElement('button');
+        const cancelBtnI = document.createElement('i');
+        cancelBtnI.className = 'fa-solid fa-times';
+        cancelBtn.appendChild(cancelBtnI);
+        cancelBtn.addEventListener('click', () => {
+            reply.removeChild(editForm);
+            reply.removeChild(cancelBtn);
+            reply.insertBefore(replyP, referenceNode);
+        })
+
+        editForm.appendChild(editInput);
+        editForm.appendChild(csrfToken);
+        editForm.appendChild(editBtn);
+
+        const referenceNode = reply.children[2];
+        reply.insertBefore(editForm, referenceNode);
+        reply.insertBefore(cancelBtn, referenceNode);
+        reply.removeChild(replyP);
+    });
+
+    const deleteBtn = document.createElement('a');
+    deleteBtn.className = 'delete-btn';
+    const repPK = replyCard.querySelector('#to-pet').value;
+    const deleteReplytUrl = Urls.reply_delete(pk=repPK);
+    deleteBtn.href = deleteReplytUrl;
+
+    const deleteBtnI = document.createElement('i');
+    deleteBtnI.className = 'fa-solid fa-times';
+
+    deleteBtn.appendChild(deleteBtnI);
+    deleteBtn.innerHTML += ' Delete';
 
     const divBtns = document.createElement('div');
     divBtns.className = 'reply-div-btns';
 
     divBtns.appendChild(replyBtn);
-    divBtns.appendChild(replyCancelBtn);
-    divBtns.appendChild(replyDeleteBtn);
+    divBtns.appendChild(editBtn);
+    divBtns.appendChild(deleteBtn);
 
     reply.appendChild(divBtns);
 };

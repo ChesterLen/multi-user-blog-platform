@@ -264,3 +264,24 @@ def reply(request, pk):
         return redirect(request.META.get('HTTP_REFERER', 'refirect_if_referer_not_found'))
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def edit_reply(request, pk):
+    reply = models.Reply.objects.get(pk=pk)
+    reply_input = request.POST.get('edit_input')
+    print(reply_input)
+
+    form = forms.ReplyEditForm
+
+    if form.is_valid:
+        reply.reply = reply_input
+        reply.save()
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+    
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def delete_reply(request, pk):
+    reply = models.Reply.objects.get(pk=pk)
+    reply.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

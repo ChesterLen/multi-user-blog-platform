@@ -46,3 +46,9 @@ class ReplyForm(forms.ModelForm):
     class Meta:
         model = models.Reply
         fields = ['reply']
+
+
+class ReplyEditForm(forms.ModelForm):
+    class Meta:
+        model = models.Reply
+        fields = ['reply']

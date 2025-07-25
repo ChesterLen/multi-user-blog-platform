@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 {% if comment.reply_set.first %}
-                    {% for reply in comment.reply_set.all %}
+                    {% for reply in comment.reply_set.all|slice:"::-1" %}
                         <div class="reply-card">
                             <div class="container">
                                 <input type="hidden" value="{{ comment.pk }}" name="com_pk" id="com-pk">
