@@ -189,6 +189,12 @@ for (const card of commentCards) {
         pubPkHidden.name = 'pub_pk';
         pubPkHidden.id = 'pub-pk';
 
+        const comPKHidden = document.createElement('input');
+        comPKHidden.type = 'hidden';
+        comPKHidden.value = comPK.value;
+        comPKHidden.name = 'com_pk';
+        comPKHidden.id = 'com-pk';
+
         const replyInput = document.createElement('input');
         replyInput.type = 'text';
         replyInput.name = 'reply';
@@ -200,16 +206,35 @@ for (const card of commentCards) {
         replyFormCommentFormCsrfToken.name = 'csrfmiddlewaretoken';
 
         const replyFormCommentFormBtn = document.createElement('button');
-        replyFormCommentFormBtn.textContent = 'Reply';
+        const replyFormCommentFormBtnI = document.createElement('i');
+        replyFormCommentFormBtnI.className = 'fa-solid fa-reply';
+        replyFormCommentFormBtn.appendChild(replyFormCommentFormBtnI);
 
         replyFormCommentForm.appendChild(pubPkHidden);
-        replyFormCommentForm.appendChild(comPK);
+        replyFormCommentForm.appendChild(comPKHidden);
         replyFormCommentForm.appendChild(replyInput);
         replyFormCommentForm.appendChild(replyFormCommentFormCsrfToken);
         replyFormCommentForm.appendChild(replyFormCommentFormBtn);
 
         const referenceNode = card.children[1];
-        card.insertBefore(replyFormCommentForm, referenceNode);
+        const formDiv = document.createElement('div');
+        formDiv.className = 'form-div';
+
+        const cancelBtn = document.createElement('button');
+        const cancelBtnI = document.createElement('i');
+        cancelBtnI.className = 'fa-solid fa-times';
+        cancelBtn.appendChild(cancelBtnI);
+
+        cancelBtn.addEventListener('click', () => {
+            card.removeChild(formDiv);
+        });
+
+        formDiv.appendChild(replyFormCommentForm);
+        formDiv.appendChild(cancelBtn);
+        
+        if (!card.querySelector('.form-div')) {
+            card.insertBefore(formDiv, referenceNode);
+        };
     });
 
     editBtn.addEventListener('click', () => {
@@ -339,7 +364,9 @@ for (const replyCard of replyCards) {
 
         replyDiv.appendChild(replyForm);
 
-        replyCard.appendChild(replyDiv);
+        if (!replyCard.querySelector('.reply-reply-div')) {
+            replyCard.appendChild(replyDiv);
+        };
     });
 
     const editBtn = document.createElement('button');

@@ -289,6 +289,18 @@
     cursor: pointer;
 }
 
+.form-div {
+    display: flex;
+    align-items: center;
+}
+
+.form-div button {
+    border: none;
+    background: none;
+    margin-left: 0.2em;
+    cursor: pointer;
+}
+
 .edit-form-div {
     display: flex;
 }
