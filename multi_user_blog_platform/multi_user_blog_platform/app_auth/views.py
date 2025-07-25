@@ -234,6 +234,13 @@ def comment_edit(request, pk):
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
+def comment_delete(request, pk):
+    comment = models.Comment.objects.get(pk=pk)
+
+    comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
 def reply(request, pk):
     reply = request.POST.get('reply')
     publication = models.Publication.objects.get(pk=request.POST.get('pub_pk'))

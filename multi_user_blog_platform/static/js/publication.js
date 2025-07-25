@@ -164,10 +164,16 @@ for (const card of commentCards) {
 
     const deleteBtn = document.createElement('a');
     deleteBtn.className = 'delete-btn';
+    const comPK = document.querySelector('#com-pk').value;
+    const deleteCommentUrl = Urls.comment_delete(pk=comPK);
+    deleteBtn.href = deleteCommentUrl;
+
     const deleteBtnI = document.createElement('i');
     deleteBtnI.className = 'fa-solid fa-times';
+
     deleteBtn.appendChild(deleteBtnI);
     deleteBtn.innerHTML += ' Delete';
+
 
     replyBtn.addEventListener('click', () => {
         const replyFormCommentForm = document.createElement('form');
@@ -238,6 +244,13 @@ for (const card of commentCards) {
             comment.removeChild(editFormDiv);
             comment.prepend(commentP);
         });
+
+        // deleteBtn.addEventListener('click', () => {
+        //     const deleteA = document.createElement('a');
+        //     const comPK = document.querySelector('#com-pk').value;
+        //     const deleteCommentUrl = Urls.comment_delete(pk=comPK);
+        //     deleteA.href = deleteCommentUrl;
+        // })
 
         const editFormDiv = document.createElement('div');
         editFormDiv.className = 'edit-form-div';
