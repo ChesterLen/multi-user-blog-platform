@@ -1,17 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if pets %}
-        <ul>
-            {% for pet in pets %}
-                {% if pet.user.pk == request.pet.user.pk %}
-                    <li><a href="{% url 'profile_details' pk=pet.pk %}">{{ pet.user.email }} Logged in</a></li>
-                {% else %}
-                    <li><a href="{% url 'profile_details' pk=pet.pk %}">{{ pet.user.email }}</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endif %}
     {% if publications %}
     <div class="publications">
         {% for publication in publications %}
