@@ -56,7 +56,7 @@
                 {% if comment.pet.petimage_set.first %}
                 <div class="comment-user-data">
                     <div class="comment-user-img">
-                        <img src="{{ comment.pet.petimage_set.first.image.url }}" alt="user image">
+                        <a href="{% url 'profile_details' pk=comment.pet.pk %}"><img src="{{ comment.pet.petimage_set.first.image.url }}" alt="user image"></a>
                     </div>
                     <p>{{ comment.pet.name }}</p>
                 </div>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             {% if comment.reply_set.first %}
-            {% for reply in comment.reply_set.all|slice:"::-1" %}
+            {% for reply in comment.reply_set.all %}
             <div class="reply-card">
                 <div class="container">
                     <input type="hidden" value="{{ comment.pk }}" name="com_pk" id="com-pk">

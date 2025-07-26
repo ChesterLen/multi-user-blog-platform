@@ -386,7 +386,6 @@ for (const replyCard of replyCards) {
 
     editBtn.addEventListener('click', () => {
         let replyP = reply.querySelector('.reply p');
-        console.log(replyP.textContent);
 
         const editForm = document.createElement('form');
         editForm.className = 'reply-edit-form';
