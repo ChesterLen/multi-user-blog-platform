@@ -17,11 +17,18 @@ class HomePageView(views.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        liked_publications = []
+
+        for like in models.Like.objects.all():
+            if like.liker == self.request.pet:
+                liked_publications.append(like.publication)
+
         try:
             featured_pets = models.Pet.objects.all()[:4]
             context['featured_pets'] = featured_pets
             context['pets'] = models.Pet.objects.all()
             context['publications'] = models.Publication.objects.all()
+            context['liked_publications'] = liked_publications
         except models.Pet.DoesNotExist as error:
             print(error)
 

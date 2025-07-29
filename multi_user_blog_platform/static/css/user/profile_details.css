@@ -353,6 +353,11 @@
     display: flex;
 }
 
+.reply-user-data a {
+    color: #000;
+    text-decoration: none;
+}
+
 .reply {
     display: flex;
     align-items: center;

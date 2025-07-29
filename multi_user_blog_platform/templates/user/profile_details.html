@@ -142,7 +142,7 @@
                                     {% else %}
                                         <div class="reply-user-img"></div>
                                     {% endif %}
-                                    <p>{{ reply.from_pet.name }}</p>
+                                    <a href="{% url 'profile_details' pk=reply.from_pet.pk %}"><p>{{ reply.from_pet.name }}</p></a>
                                 </div>
                                 <div class="reply">
                                     <span id="reply-pet-name">@{{ reply.to_pet.name }}</span><p> {{ reply.reply }}</p>
