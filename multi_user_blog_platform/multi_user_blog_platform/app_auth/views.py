@@ -186,10 +186,7 @@ def like(request, pk):
     if not like:
         like = models.Like.objects.create(publication=publication, liker=request.pet)
     
-    if 'profile' in request.path:
-        return redirect('profile_details', pet.pk)
-    
-    return redirect('home_page')
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 def unlike(request, pk):
@@ -205,10 +202,7 @@ def unlike(request, pk):
     if like:
         like.delete()
 
-    if 'profile' in request.path:
-        return redirect('profile_details', pet.pk)
-    
-    return redirect('home_page')
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 def comment(request, pk):
