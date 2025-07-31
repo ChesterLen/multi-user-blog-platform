@@ -124,39 +124,41 @@
 
 /* Pop up end */
 
+
+/* Publications start */
+
 .publications {
     margin: 1em 0;
     width: 70%;
 }
 
 .publication-card {
-    background-color: #eee;
+    background-color: #eff09e;
     margin-top: 2em;
     width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .user {
     width: 100%;
-    height: 50px;
+    height: auto;
     display: flex;
     align-items: center;
     gap: 0.5em;
-    background-color: #F68537;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
+    padding: 0.3em;
 }
 
 .user-img {
-    width: 40px;
-    height: 40px;
-    border: 3px #fff solid;
+    width: 70px;
+    height: 70px;
+    border: 2px #fff solid;
     border-radius: 50%;
-    margin-left: 0.5em;
 }
 
 .user-img img {
@@ -168,7 +170,7 @@
 .content {
     margin: 0.5em 0;
     font-size: 25px;
-    padding-left: 1em;
+    padding-left: 0.3em;
 }
 
 .content h4 {
@@ -178,16 +180,16 @@
 .engagement {
     width: 100%;
     height: auto;
-    background-color: #eee;
     display: flex;
     flex-direction: column;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    margin-left: 0.5em;
 }
 
 .engagement-div > form {
     width: 90%;
-    margin: 1em auto 0 auto;
+    margin: 1em auto 0.5em auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -202,7 +204,6 @@
     justify-content: flex-start;
     gap: 3em;
     margin-bottom: 0.5em;
-    padding-left: 1.7em;
 }
 
 .form-btns {
@@ -248,6 +249,35 @@
     color: red;
 }
 
-.comment-card .container {
+/* Publications end */
+
+/* Comments start */
+
+.comment-card {
+    margin-top: 0.5em;
+    margin-left: 1.5em;
+}
+
+.comment-user-data {
     display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.comment-user-img {
+    width: 50px;
+    height: 50px;
+    border: 2px #fff solid;
+    border-radius: 50%;
+}
+
+.comment-user-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.comment {
+    margin-top: 0.5em;
+    margin-left: 3.5em;
 }
