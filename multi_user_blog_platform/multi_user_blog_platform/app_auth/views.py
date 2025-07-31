@@ -203,3 +203,39 @@ def unlike(request, pk):
         like.delete()
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def comment(request, pk):
+    comment = request.POST.get('comment')
+    publication = models.Publication.objects.get(pk=pk)
+    pet = request.pet
+
+    form = forms.CommentForm
+
+    if form.is_valid:
+        models.Comment.objects.create(comment=comment, publication=publication, pet=pet)
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def comment_edit(request, pk):
+    comment = models.Comment.objects.get(pk=pk)
+    comment_edit_value = request.POST.get('comment_edit')
+
+    form = forms.CommentEditForm
+
+    if form.is_valid:
+        comment.comment = comment_edit_value
+        comment.save()
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def comment_delete(request, pk):
+    comment = models.Comment.objects.get(pk=pk)
+
+    comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
