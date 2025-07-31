@@ -16,11 +16,5 @@ urlpatterns = [
         path('following/<int:pk>/', views.Followers.as_view(), name='following'),
         path('like/<int:pk>/', views.like, name='like'),
         path('unlike/<int:pk>/', views.unlike, name='unlike'),
-        path('comment/<int:pk>/', views.comment, name='comment'),
-        path('comment/edit/<int:pk>/', views.comment_edit, name='comment_edit'),
-        path('comment/delete<int:pk>/', views.comment_delete, name='comment_delete'),
-        path('reply/<int:pk>/', views.reply, name='reply'),
-        path('reply/edit/<int:pk>/', views.edit_reply, name='reply_edit'),
-        path('reply/delete/<int:pk>/', views.delete_reply, name='reply_delete'),
     ]))
 ]

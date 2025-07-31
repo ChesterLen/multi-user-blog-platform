@@ -127,30 +127,6 @@
                         <p>{{ comment.comment }}</p>
                     </div>
                 </div>
-                {% if comment.reply_set.first %}
-                    {% for reply in comment.reply_set.all|slice:"::-1" %}
-                        <div class="reply-card">
-                            <div class="container">
-                                <input type="hidden" value="{{ comment.pk }}" name="com_pk" id="com-pk">
-                                <input type="hidden" value="{{ reply.pk }}" name="to_pet" id="to-pet">
-                                <input type="hidden" value="{{ reply.publication.pk }}" name="pub_pk" id="pub-pk">
-                                <div class="reply-user-data">
-                                    {% if reply.from_pet.petimage_set.first %}
-                                        <div class="reply-user-img">
-                                            <img src="{{ reply.from_pet.petimage_set.first.image.url }}" alt="user image">
-                                        </div>
-                                    {% else %}
-                                        <div class="reply-user-img"></div>
-                                    {% endif %}
-                                    <a href="{% url 'profile_details' pk=reply.from_pet.pk %}"><p>{{ reply.from_pet.name }}</p></a>
-                                </div>
-                                <div class="reply">
-                                    <span id="reply-pet-name">@{{ reply.to_pet.name }}</span><p> {{ reply.reply }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
             </div>
         {% endfor %}
     {% endif %}
