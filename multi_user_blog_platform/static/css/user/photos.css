@@ -1,11 +1,21 @@
 .photos-container {
     display: flex;
     width: 100%;
+    min-height: 100vh;
 }
 
 .inner-photos {
     flex-basis: 60%;
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3em;
+}
+
+.main-photo {
+    width: 400px;
+    height: 400px;
+    cursor: pointer;
 }
 
 .photo-comments {
@@ -15,9 +25,12 @@
 .inner-photos-container {
     display: flex;
     flex-direction: column;
+    gap: 0.5em;
+    margin-left: 3em;
 }
 
 .inner-photos-container img {
     width: 150px;
     height: 150px;
+    cursor: pointer;
 }
