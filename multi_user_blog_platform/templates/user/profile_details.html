@@ -22,8 +22,8 @@
 
         <div class="profile-data">
             {% if object.name %}
-            <h3>Name: {{ object.name }} <a href="{% url 'dog_or_cat' %}"><a href="{% url 'dog_or_cat' %}"><i
-                            class="fa-solid fa-gear"></i></a></h3>
+            <h3>Name: {{ object.name }} <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h3>
+            <p><a href="{% url 'pet_image_api' %}">images api</a></p>
             {% else %}
             <h3>Name: <a href="{% url 'dog_or_cat' %}"><i class="fa-solid fa-gear"></i></a></h3>
             {% endif %}
@@ -50,6 +50,10 @@
         </div>
     </div>
     <p>{{ object.description }}</p>
+
+    <div class="profile-nav">
+        <div class="photos"><a href="{% url 'photos' pk=object.pk %}">Photos</a></div>
+    </div>
 </div>
 
 {% if request.pet == object.user.pet %}

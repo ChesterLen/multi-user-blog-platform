@@ -17,5 +17,8 @@ urlpatterns = [
         path('like/<int:pk>/', views.like, name='like'),
         path('unlike/<int:pk>/', views.unlike, name='unlike'),
         path('comment/<int:pk>/', views.comment, name='comment'),
+        path('photos/<int:pk>/', views.ProfilePhotosView.as_view(), name='photos'),
+        path('pet/image/api/', views.PetImageAPI.as_view(), name='pet_image_api'),
+        path('pet/image/comment/api/', views.PetImageCommentAPI.as_view(), name='pet_image_comment_api'),
     ]))
 ]

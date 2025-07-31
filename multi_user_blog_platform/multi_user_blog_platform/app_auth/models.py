@@ -82,3 +82,9 @@ class Comment(models.Model):
 
     publication = models.ForeignKey(to=Publication, on_delete=models.CASCADE)
     pet = models.ForeignKey(to=Pet, on_delete=models.CASCADE)
+
+
+class PhotoComment(models.Model):
+    comment = models.TextField(max_length=1500, null=False, blank=False)
+
+    photo = models.ForeignKey(to=PetImage, on_delete=models.CASCADE)

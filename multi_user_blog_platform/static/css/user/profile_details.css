@@ -75,6 +75,18 @@
     margin-left: 0.3em;
 }
 
+.profile-nav {
+    margin: 0.5em 0;
+}
+
+.photos a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #F68537;
+    padding: 0.3em 0.5em;
+    border-radius: 5px;
+}
+
 /* Pop up start */
 
 .form-pop-up {

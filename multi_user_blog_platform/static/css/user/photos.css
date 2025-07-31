@@ -1,0 +1,23 @@
+.photos-container {
+    display: flex;
+    width: 100%;
+}
+
+.inner-photos {
+    flex-basis: 60%;
+    display: flex;
+}
+
+.photo-comments {
+    flex-basis: 40%;
+}
+
+.inner-photos-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.inner-photos-container img {
+    width: 150px;
+    height: 150px;
+}

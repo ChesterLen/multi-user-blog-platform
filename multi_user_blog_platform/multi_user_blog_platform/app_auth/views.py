@@ -6,6 +6,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import views as auth_views, get_user_model, logout, mixins
 from django.shortcuts import redirect, render
 from django.conf import settings
+from rest_framework import generics as api_views
+from multi_user_blog_platform.core import apis
 
 
 UserModel = get_user_model()
@@ -118,6 +120,16 @@ class ProfileUpdateView(mixins.LoginRequiredMixin, views.UpdateView):
         for image in images:
             models.PetImage.objects.create(pet=pet, image=image)
         return super().form_valid(form)
+
+
+class ProfilePhotosView(views.DetailView):
+    queryset = models.Pet.objects.all()
+    template_name = 'user/photos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['photos'] = models.PetImage.objects.filter(pet=self.request.pet)
+        return context
     
 
 class Followers(views.DetailView):
@@ -239,3 +251,13 @@ def comment_delete(request, pk):
 
     comment.delete()
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+class PetImageAPI(api_views.ListAPIView):
+    queryset = models.PetImage.objects.all()
+    serializer_class = apis.PetImageSerializer
+
+
+class PetImageCommentAPI(api_views.ListAPIView):
+    queryset = models.PhotoComment.objects.all()
+    serializer_class = apis.PetImageCommentsSerializer
