@@ -99,6 +99,4 @@ Then open `http://127.0.0.1:8000/` in your browser.
 - Create, update, and delete your own blog posts.
 - Access the admin panel at `/admin/` (after creating a superuser with `python manage.py createsuperuser`).
 
-> This setup is intended for development purposes. For production use, make sure to configure secure settings, static/media file handling, and a production-ready database.
-
 ---
